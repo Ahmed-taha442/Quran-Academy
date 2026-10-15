@@ -1,20 +1,45 @@
 @import "tailwindcss";
 
 :root {
-  --bg: #f6f1e7;
-  --ink: #1c1915;
-  --accent: #1f6b4a;
-  --gold: #b0893e;
+  color-scheme: light;
+  --bg: #f7f8f3;
+  --surface: #ffffff;
+  --surface-soft: #edf2e9;
+  --ink: #202b25;
+  --muted: #5b6860;
+  --accent: #28634a;
+  --accent-hover: #1d503a;
+  --gold: #a7762d;
+  --border: #d8e0d8;
 }
 
 html {
   scroll-behavior: smooth;
+  overflow-x: clip;
 }
 
 body {
+  min-width: 320px;
+  margin: 0;
   background: var(--bg);
   color: var(--ink);
   font-family: var(--font-body), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: #d5e5d7;
+  color: var(--ink);
+}
+
+a {
+  text-underline-offset: 0.2em;
+}
+
+a:focus-visible,
+button:focus-visible {
+  outline: 3px solid #b68a45;
+  outline-offset: 3px;
 }
 
 .font-arabic {

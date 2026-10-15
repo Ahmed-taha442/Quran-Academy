@@ -1,33 +1,48 @@
 "use client";
 
 import { useTranslations } from "next-intl";
+import { useState } from "react";
 import { Link } from "@/i18n/navigation";
 import { siteConfig } from "@/config/site";
 import { LocaleSwitcher } from "@/components/layout/locale-switcher";
 
 export function SiteHeader() {
   const t = useTranslations("nav");
+  const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <header className="border-b border-stone-300/70 bg-[#f6f1e7]/90 backdrop-blur">
-      <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-4">
-        <Link href="/" className="font-arabic text-xl font-bold text-[var(--accent)]">
+    <header className="sticky top-0 z-30 border-b border-[var(--border)] bg-[var(--bg)]/95 backdrop-blur">
+      <div className="relative mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 py-3 sm:px-6 lg:px-8">
+        <Link href="/" className="shrink-0 font-arabic text-xl font-bold text-[var(--accent)]">
           Accadmy
         </Link>
-        <nav className="flex flex-wrap items-center justify-end gap-3 text-sm">
-          <Link href="/programs">{t("programs")}</Link>
-          <Link href="/learn/noor-bayan">{t("noorBayan")}</Link>
-          <Link href="/learn/quran">{t("quran")}</Link>
-          <LocaleSwitcher />
+        <button
+          type="button"
+          className="inline-flex size-10 shrink-0 items-center justify-center rounded-xl border border-[var(--border)] bg-white text-[var(--ink)] md:hidden"
+          aria-label="Toggle navigation"
+          aria-expanded={menuOpen}
+          aria-controls="site-navigation"
+          onClick={() => setMenuOpen((open) => !open)}
+        >
+          <span className="text-xl leading-none" aria-hidden="true">{menuOpen ? "×" : "☰"}</span>
+        </button>
+        <nav
+          id="site-navigation"
+          className={`${menuOpen ? "flex" : "hidden"} absolute inset-x-3 top-[calc(100%+0.5rem)] flex-col items-stretch gap-1 rounded-2xl border border-[var(--border)] bg-white p-3 text-sm shadow-xl md:static md:flex md:flex-row md:items-center md:justify-end md:gap-2 md:border-0 md:bg-transparent md:p-0 md:shadow-none`}
+        >
+          <Link onClick={() => setMenuOpen(false)} className="rounded-xl px-3 py-2.5 hover:bg-[var(--surface-soft)] md:py-2" href="/programs">{t("programs")}</Link>
+          <Link onClick={() => setMenuOpen(false)} className="rounded-xl px-3 py-2.5 hover:bg-[var(--surface-soft)] md:py-2" href="/learn/noor-bayan">{t("noorBayan")}</Link>
+          <Link onClick={() => setMenuOpen(false)} className="rounded-xl px-3 py-2.5 hover:bg-[var(--surface-soft)] md:py-2" href="/learn/quran">{t("quran")}</Link>
+          <div className="my-1 md:my-0"><LocaleSwitcher /></div>
           <a
             href={siteConfig.whatsappTrialUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="rounded-full bg-[#1f6b4a] px-4 py-1.5 text-white"
+            className="rounded-full bg-[var(--accent)] px-4 py-2.5 text-center font-medium text-white transition-colors hover:bg-[var(--accent-hover)] md:py-2"
           >
             {t("trial")}
           </a>
-          <Link href="/login" className="rounded-full border border-stone-400 px-4 py-1.5">
+          <Link onClick={() => setMenuOpen(false)} href="/login" className="rounded-full border border-[var(--border)] px-4 py-2.5 text-center font-medium text-[var(--accent)] hover:bg-[var(--surface-soft)] md:py-2">
             {t("login")}
           </Link>
         </nav>
