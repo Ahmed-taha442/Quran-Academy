@@ -1,0 +1,67 @@
+{
+  "meta": {
+    "title": "Akademi Quran & Noor Al-Bayan",
+    "description": "Belajar membaca Quran dengan Noor Al-Bayan untuk penutur non-Arab."
+  },
+  "nav": {
+    "programs": "Program",
+    "quran": "Quran",
+    "noorBayan": "Noor Al-Bayan",
+    "login": "Masuk",
+    "student": "Siswa",
+    "teacher": "Guru",
+    "trial": "Kelas uji coba"
+  },
+  "home": {
+    "eyebrow": "Pengajar Quran bersertifikat",
+    "headline": "Belajar Quran bersama Afaf Assem",
+    "sub": "Anda di sini karena ingin belajar Quran, dan saya siap membantu Anda mencapai tujuan itu, insyaAllah.",
+    "ctaTrial": "Pesan kelas uji coba gratis",
+    "ctaPrograms": "Lihat program",
+    "ctaWhatsApp": "Kirim WhatsApp",
+    "videoTitle": "Tonton pengantar",
+    "videoCaption": "Kenali pengajar dan cara mengajarnya.",
+    "aboutTitle": "Tentang pengajar",
+    "teacherName": "Afaf Assem",
+    "teacherRole": "Pengajar Quran bersertifikat",
+    "intro": "Anda di sini karena ingin belajar Quran, dan saya siap membantu Anda mencapai tujuan itu, insyaAllah.",
+    "experience": "Saya memiliki empat tahun pengalaman mengajar Quran kepada penutur non-Arab, di berbagai akademi dan dengan siswa dari usia serta latar belakang yang berbeda.",
+    "credentials": "Alhamdulillah, saya memiliki ijazah bacaan Imam Asim melalui Hafs dan Syu'bah, ijazah Al-Jazariyyah, serta dua diploma pelatihan guru Quran.",
+    "classes": "Di kelas: bacaan dan hafalan Quran, Noor Al-Bayan, tajwid dasar dan lanjutan, bahasa Arab Quran, dan studi Islam, insyaAllah.",
+    "goal": "Tujuan saya membuat belajar Quran mudah, nyaman, dan sesuai tingkat setiap siswa.",
+    "offerTitle": "Yang bisa Anda pelajari",
+    "offer1": "Bacaan dan hafalan Quran",
+    "offer2": "Kursus dasar Noor Al-Bayan",
+    "offer3": "Tajwid dasar dan lanjutan",
+    "offer4": "Bahasa Arab Quran",
+    "offer5": "Studi Islam",
+    "trialTitle": "Pesan kelas uji coba gratis",
+    "trialBody": "Kirim pesan WhatsApp untuk reservasi sesi uji coba sesuai tingkat Anda.",
+    "trialNote": "Buka WhatsApp, perkenalkan diri, dan sampaikan materi yang ingin dipelajari."
+  },
+  "programs": {
+    "title": "Jalur belajar",
+    "noorTitle": "Noor Al-Bayan",
+    "noorBody": "Huruf, bentuk, harakat, dan bacaan bersambung hingga siswa bisa membuka Mushaf.",
+    "quranTitle": "Al-Quran",
+    "quranBody": "Tilawah yang benar, dasar tajwid, kelancaran, hafalan, dan murajaah."
+  },
+  "noorBayan": {
+    "title": "Noor Al-Bayan",
+    "isolatedLetters": "Huruf terpisah",
+    "letterForms": "Bentuk huruf",
+    "harakat": "Harakat"
+  },
+  "quran": {
+    "title": "Jalur Quran",
+    "mushaf": "Mushaf",
+    "tajweed": "Tajwid",
+    "hifz": "Hafalan"
+  },
+  "dashboard": {
+    "student": "Dasbor siswa",
+    "teacher": "Dasbor guru",
+    "admin": "Dasbor admin",
+    "continue": "Lanjutkan dari terakhir kali"
+  }
+}

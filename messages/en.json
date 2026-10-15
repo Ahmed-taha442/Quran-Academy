@@ -1,0 +1,67 @@
+{
+  "meta": {
+    "title": "Quran & Noor Al-Bayan Academy",
+    "description": "Learn to read the Quran with Noor Al-Bayan, designed for non-Arabic speakers."
+  },
+  "nav": {
+    "programs": "Programs",
+    "quran": "Quran",
+    "noorBayan": "Noor Al-Bayan",
+    "login": "Log in",
+    "student": "Student",
+    "teacher": "Teacher",
+    "trial": "Free trial"
+  },
+  "home": {
+    "eyebrow": "Certified Quran tutor",
+    "headline": "Learn the Quran with Afaf Assem",
+    "sub": "You’re here because you want to learn the Quran, and I’m here to help you achieve your goal, in sha’Allah.",
+    "ctaTrial": "Book a free trial",
+    "ctaPrograms": "View programs",
+    "ctaWhatsApp": "Message on WhatsApp",
+    "videoTitle": "Watch an introduction",
+    "videoCaption": "Get to know the teacher and how classes are taught.",
+    "aboutTitle": "About the teacher",
+    "teacherName": "Afaf Assem",
+    "teacherRole": "Certified Quran tutor",
+    "intro": "You’re here because you want to learn the Quran, and I’m here to help you achieve your goal, in sha’Allah.",
+    "experience": "I have four years of experience teaching the Quran to non-Arabic speakers, and I’ve worked with different Quran academies and students of various ages and backgrounds.",
+    "credentials": "Alhamdulillah, I hold an Ijaza in the recitation of Imam ‘Asim through both Hafs and Shu‘bah, and an Ijaza in Al-Jazariyyah. I’ve also completed two specialized diplomas in Quran teacher training, along with several courses in Tajweed and Islamic Studies.",
+    "classes": "In my classes, you can learn Quran reading and memorization, the Foundation Course with Noor Al-Bayan, Basic and Advanced Tajweed, Quranic Arabic, and Islamic Studies, in sha’Allah.",
+    "goal": "My goal is to make learning the Quran easy, comfortable, and suitable for each student’s level and needs. I’m passionate about helping my students overcome their difficulties and become more confident in their recitation.",
+    "offerTitle": "What you can learn",
+    "offer1": "Quran reading and memorization",
+    "offer2": "Foundation Course with Noor Al-Bayan",
+    "offer3": "Basic and Advanced Tajweed",
+    "offer4": "Quranic Arabic",
+    "offer5": "Islamic Studies",
+    "trialTitle": "Book a free trial class",
+    "trialBody": "Send a WhatsApp message to reserve a trial session. We’ll match the class to your level, age, and goals.",
+    "trialNote": "Open WhatsApp, introduce yourself, and tell us what you’d like to learn."
+  },
+  "programs": {
+    "title": "Learning path",
+    "noorTitle": "Noor Al-Bayan",
+    "noorBody": "Arabic letters, forms, vowels, and connected reading until the student can open the Mushaf.",
+    "quranTitle": "Holy Quran",
+    "quranBody": "Correct recitation, tajweed foundations, fluency, memorization, and revision."
+  },
+  "noorBayan": {
+    "title": "Noor Al-Bayan",
+    "isolatedLetters": "Isolated letters",
+    "letterForms": "Letter forms",
+    "harakat": "Short vowels"
+  },
+  "quran": {
+    "title": "Quran track",
+    "mushaf": "Mushaf",
+    "tajweed": "Tajweed",
+    "hifz": "Memorization"
+  },
+  "dashboard": {
+    "student": "Student dashboard",
+    "teacher": "Teacher dashboard",
+    "admin": "Admin dashboard",
+    "continue": "Continue from where you stopped"
+  }
+}

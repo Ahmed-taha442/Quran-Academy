@@ -1,0 +1,67 @@
+{
+  "meta": {
+    "title": "Académie du Coran et Noor Al-Bayan",
+    "description": "Apprendre à lire le Coran avec Noor Al-Bayan, pour les non-arabophones."
+  },
+  "nav": {
+    "programs": "Programmes",
+    "quran": "Coran",
+    "noorBayan": "Noor Al-Bayan",
+    "login": "Connexion",
+    "student": "Élève",
+    "teacher": "Enseignant",
+    "trial": "Cours d'essai"
+  },
+  "home": {
+    "eyebrow": "Enseignante certifiée du Coran",
+    "headline": "Apprenez le Coran avec Afaf Assem",
+    "sub": "Vous êtes ici pour apprendre le Coran, et je suis là pour vous aider à atteindre votre objectif, in cha Allah.",
+    "ctaTrial": "Réserver un essai gratuit",
+    "ctaPrograms": "Voir les programmes",
+    "ctaWhatsApp": "Écrire sur WhatsApp",
+    "videoTitle": "Voir une présentation",
+    "videoCaption": "Découvrez l'enseignante et sa méthode.",
+    "aboutTitle": "À propos de l'enseignante",
+    "teacherName": "Afaf Assem",
+    "teacherRole": "Enseignante certifiée du Coran",
+    "intro": "Vous êtes ici pour apprendre le Coran, et je suis là pour vous aider à atteindre votre objectif, in cha Allah.",
+    "experience": "J'ai quatre ans d'expérience dans l'enseignement du Coran aux non-arabophones, avec différentes académies et des élèves d'âges et de parcours variés.",
+    "credentials": "Alhamdulillah, je détiens une ijaza dans la récitation de l'imam 'Asim selon Hafs et Shu'bah, et une ijaza en Al-Jazariyyah, ainsi que deux diplômes spécialisés de formation des enseignantes du Coran.",
+    "classes": "Dans mes cours : lecture et mémorisation du Coran, Noor Al-Bayan, tajwid de base et avancé, arabe coranique et études islamiques, in cha Allah.",
+    "goal": "Mon objectif est de rendre l'apprentissage du Coran facile, confortable et adapté au niveau de chaque élève.",
+    "offerTitle": "Ce que vous pouvez apprendre",
+    "offer1": "Lecture et mémorisation du Coran",
+    "offer2": "Cours fondation Noor Al-Bayan",
+    "offer3": "Tajwid de base et avancé",
+    "offer4": "Arabe coranique",
+    "offer5": "Études islamiques",
+    "trialTitle": "Réserver un cours d'essai gratuit",
+    "trialBody": "Envoyez un message WhatsApp pour réserver un essai adapté à votre niveau.",
+    "trialNote": "Ouvrez WhatsApp, présentez-vous et dites ce que vous souhaitez apprendre."
+  },
+  "programs": {
+    "title": "Parcours d'apprentissage",
+    "noorTitle": "Noor Al-Bayan",
+    "noorBody": "Lettres, formes, voyelles et lecture liée jusqu'à ouvrir le Mushaf.",
+    "quranTitle": "Saint Coran",
+    "quranBody": "Récitation correcte, bases du tajwid, fluidité, mémorisation et révision."
+  },
+  "noorBayan": {
+    "title": "Noor Al-Bayan",
+    "isolatedLetters": "Lettres isolées",
+    "letterForms": "Formes des lettres",
+    "harakat": "Voyelles brèves"
+  },
+  "quran": {
+    "title": "Parcours Coran",
+    "mushaf": "Mushaf",
+    "tajweed": "Tajwid",
+    "hifz": "Mémorisation"
+  },
+  "dashboard": {
+    "student": "Tableau de l'élève",
+    "teacher": "Tableau de l'enseignant",
+    "admin": "Tableau admin",
+    "continue": "Reprendre là où vous vous êtes arrêté"
+  }
+}

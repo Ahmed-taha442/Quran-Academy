@@ -1,0 +1,67 @@
+{
+  "meta": {
+    "title": "Kur'an ve Nurul Beyan Akademisi",
+    "description": "Arapça konuşmayanlar için Nurul Beyan ile Kur'an okumayı öğrenin."
+  },
+  "nav": {
+    "programs": "Programlar",
+    "quran": "Kur'an",
+    "noorBayan": "Nurul Beyan",
+    "login": "Giriş",
+    "student": "Öğrenci",
+    "teacher": "Öğretmen",
+    "trial": "Deneme dersi"
+  },
+  "home": {
+    "eyebrow": "Sertifikalı Kur'an hocası",
+    "headline": "Afaf Assem ile Kur'an öğrenin",
+    "sub": "Kur'an öğrenmek istediğiniz için buradasınız; hedefinizde size yardımcı olmak için buradayım, inşaAllah.",
+    "ctaTrial": "Ücretsiz deneme ayırtın",
+    "ctaPrograms": "Programları gör",
+    "ctaWhatsApp": "WhatsApp'tan yazın",
+    "videoTitle": "Tanıtımı izleyin",
+    "videoCaption": "Hocayı ve ders yöntemini tanıyın.",
+    "aboutTitle": "Hoca hakkında",
+    "teacherName": "Afaf Assem",
+    "teacherRole": "Sertifikalı Kur'an hocası",
+    "intro": "Kur'an öğrenmek istediğiniz için buradasınız; hedefinizde size yardımcı olmak için buradayım, inşaAllah.",
+    "experience": "Arapça konuşmayanlara Kur'an öğretiminde dört yıllık deneyimim var; farklı akademilerde ve çeşitli yaşlardan öğrencilerle çalıştım.",
+    "credentials": "Elhamdülillah, İmam Asım kıraatinde Hafs ve Şu'be tarikiyle icazetim, El-Cezariyye icazetim ve Kur'an öğretmenliği diplomalarım vardır.",
+    "classes": "Derslerimde Kur'an okuma ve ezber, Nurul Beyan, temel ve ileri tecvid, Kur'an Arapçası ve İslamî ilimler, inşaAllah.",
+    "goal": "Amacım Kur'an öğrenimini her öğrencinin seviyesine uygun, kolay ve rahat kılmaktır.",
+    "offerTitle": "Neler öğrenebilirsiniz",
+    "offer1": "Kur'an okuma ve ezber",
+    "offer2": "Nurul Beyan temel kursu",
+    "offer3": "Temel ve ileri tecvid",
+    "offer4": "Kur'an Arapçası",
+    "offer5": "İslamî ilimler",
+    "trialTitle": "Ücretsiz deneme dersi ayırtın",
+    "trialBody": "Seviyenize uygun bir deneme için WhatsApp'tan yazın.",
+    "trialNote": "WhatsApp'ı açın, kendinizi tanıtın ve ne öğrenmek istediğinizi yazın."
+  },
+  "programs": {
+    "title": "Öğrenme yolu",
+    "noorTitle": "Nurul Beyan",
+    "noorBody": "Harfler, şekiller, harekeler ve bitişik okuma; öğrenci Mushaf'ı açabilene kadar.",
+    "quranTitle": "Kur'an-ı Kerim",
+    "quranBody": "Doğru tilavet, tecvid temelleri, akıcılık, ezber ve tekrar."
+  },
+  "noorBayan": {
+    "title": "Nurul Beyan",
+    "isolatedLetters": "Ayrı harfler",
+    "letterForms": "Harf şekilleri",
+    "harakat": "Harekeler"
+  },
+  "quran": {
+    "title": "Kur'an yolu",
+    "mushaf": "Mushaf",
+    "tajweed": "Tecvid",
+    "hifz": "Ezber"
+  },
+  "dashboard": {
+    "student": "Öğrenci paneli",
+    "teacher": "Öğretmen paneli",
+    "admin": "Yönetim paneli",
+    "continue": "Kaldığınız yerden devam edin"
+  }
+}

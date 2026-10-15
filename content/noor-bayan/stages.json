@@ -1,0 +1,46 @@
+{
+  "track": "noor-bayan",
+  "audience": "non-arabic-speakers",
+  "stages": [
+    {
+      "id": "isolated-letters",
+      "goal": "Recognize and pronounce each Arabic letter in isolation."
+    },
+    {
+      "id": "letter-forms",
+      "goal": "Read initial, medial, and final forms of each letter."
+    },
+    {
+      "id": "harakat",
+      "goal": "Read letters with fatha, kasra, and damma."
+    },
+    {
+      "id": "tanween",
+      "goal": "Read tanween endings clearly."
+    },
+    {
+      "id": "sukoon",
+      "goal": "Join a voweled letter to a sukoon letter."
+    },
+    {
+      "id": "shadda",
+      "goal": "Double the letter with shadda without swallowing it."
+    },
+    {
+      "id": "madd",
+      "goal": "Hold natural madd for two counts."
+    },
+    {
+      "id": "connected-letters",
+      "goal": "Read connected words fluently."
+    },
+    {
+      "id": "quranic-words",
+      "goal": "Read common Quranic words from the Mushaf script."
+    },
+    {
+      "id": "short-surahs",
+      "goal": "Read short surahs accurately before tajweed theory."
+    }
+  ]
+}

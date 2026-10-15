@@ -1,0 +1,22 @@
+@import "tailwindcss";
+
+:root {
+  --bg: #f6f1e7;
+  --ink: #1c1915;
+  --accent: #1f6b4a;
+  --gold: #b0893e;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body), system-ui, sans-serif;
+}
+
+.font-arabic {
+  font-family: var(--font-arabic), "Amiri", serif;
+}

@@ -1,0 +1,26 @@
+{
+  "track": "quran",
+  "prerequisites": ["noor-bayan.short-surahs"],
+  "stages": [
+    {
+      "id": "correct-reading",
+      "goal": "Read from the Mushaf with correct letters and vowels."
+    },
+    {
+      "id": "tajweed-foundations",
+      "goal": "Apply noon, meem, madd, and qalqalah at a beginner level."
+    },
+    {
+      "id": "fluency",
+      "goal": "Read a page with fewer stops and teacher correction."
+    },
+    {
+      "id": "memorization",
+      "goal": "New lesson, recent review, and old review cycle."
+    },
+    {
+      "id": "revision",
+      "goal": "Scheduled murajaah so memorized portions stay strong."
+    }
+  ]
+}

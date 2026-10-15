@@ -1,0 +1,154 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  STUDENT
+  TEACHER
+  ADMIN
+  GUARDIAN
+}
+
+enum TrackKind {
+  NOOR_BAYAN
+  QURAN
+}
+
+enum LessonKind {
+  VIDEO
+  AUDIO
+  INTERACTIVE
+  LIVE
+  PRACTICE
+  ASSESSMENT
+}
+
+enum ProgressStatus {
+  NOT_STARTED
+  IN_PROGRESS
+  COMPLETED
+  NEEDS_REVIEW
+}
+
+model User {
+  id               String   @id @default(cuid())
+  role             UserRole
+  email            String   @unique
+  displayName      String
+  preferredLocale  String   @default("en")
+  nativeLanguage   String
+  createdAt        DateTime @default(now())
+  studentProfile   StudentProfile?
+  taughtSessions   LiveSession[]   @relation("TeacherSessions")
+  feedbackGiven    TeacherFeedback[]
+}
+
+model StudentProfile {
+  id              String   @id @default(cuid())
+  userId          String   @unique
+  user            User     @relation(fields: [userId], references: [id])
+  teacherId       String?
+  guardianId      String?
+  proficiency     String
+  enrollments     Enrollment[]
+  progress        LessonProgress[]
+  hifzAssignments HifzAssignment[]
+  sessions        LiveSessionStudent[]
+}
+
+model Course {
+  id       String    @id @default(cuid())
+  slug     String    @unique
+  track    TrackKind
+  titleKey String
+  lessons  Lesson[]
+}
+
+model Lesson {
+  id              String         @id @default(cuid())
+  courseId        String
+  course          Course         @relation(fields: [courseId], references: [id])
+  slug            String
+  kind            LessonKind
+  order           Int
+  titleKey        String
+  durationMinutes Int
+  progress        LessonProgress[]
+}
+
+model Enrollment {
+  id        String         @id @default(cuid())
+  studentId String
+  student   StudentProfile @relation(fields: [studentId], references: [id])
+  courseId  String
+  startedAt DateTime       @default(now())
+}
+
+model LessonProgress {
+  id        String         @id @default(cuid())
+  studentId String
+  student   StudentProfile @relation(fields: [studentId], references: [id])
+  lessonId  String
+  lesson    Lesson         @relation(fields: [lessonId], references: [id])
+  status    ProgressStatus @default(NOT_STARTED)
+  score     Int?
+  updatedAt DateTime       @updatedAt
+
+  @@unique([studentId, lessonId])
+}
+
+model HifzAssignment {
+  id          String         @id @default(cuid())
+  studentId   String
+  student     StudentProfile @relation(fields: [studentId], references: [id])
+  surahNumber Int
+  fromAyah    Int
+  toAyah      Int
+  dueAt       DateTime?
+}
+
+model LiveSession {
+  id               String               @id @default(cuid())
+  teacherId        String
+  teacher          User                 @relation("TeacherSessions", fields: [teacherId], references: [id])
+  startsAt         DateTime
+  durationMinutes  Int
+  topic            String
+  meetingUrl       String?
+  students         LiveSessionStudent[]
+}
+
+model LiveSessionStudent {
+  sessionId String
+  studentId String
+  session   LiveSession    @relation(fields: [sessionId], references: [id])
+  student   StudentProfile @relation(fields: [studentId], references: [id])
+
+  @@id([sessionId, studentId])
+}
+
+model TeacherFeedback {
+  id          String   @id @default(cuid())
+  teacherId   String
+  teacher     User     @relation(fields: [teacherId], references: [id])
+  studentId   String
+  lessonId    String
+  comment     String
+  audioNoteUrl String?
+  createdAt   DateTime @default(now())
+}
+
+model MediaAsset {
+  id         String @id @default(cuid())
+  kind       String
+  url        String
+  durationMs Int?
+  reciter    String?
+  letterId   String?
+  ayahRef    String?
+}
