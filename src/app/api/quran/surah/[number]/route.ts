@@ -68,7 +68,7 @@ export async function GET(
     const [arabic, translation, recitation] = await Promise.all([
       getEdition(surahNumber, "quran-uthmani"),
       getEdition(surahNumber, translationEdition),
-      getEdition(surahNumber, "ar.alafasy"),
+      getEdition(surahNumber, "ar.husary"),
     ]);
 
     const ayahs = arabic.data.ayahs.map((ayah, index) => ({

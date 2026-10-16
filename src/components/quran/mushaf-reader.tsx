@@ -148,7 +148,7 @@ const copy = {
     days: "days",
     noneDue: "No ayahs are due in this range today.",
     playAyah: "Play this ayah",
-    reciter: "Reciter: Mishary Alafasy",
+    reciter: "Reciter: Mahmoud Khalil Al-Husary",
   },
   ar: {
     title: "المصحف والحفظ والمراجعة",
@@ -404,6 +404,33 @@ export function MushafReader({ locale }: { locale: string }) {
     repeatsPlayed.current = 0;
     setCurrentIndex(index);
     setPlaying(true);
+  }
+
+  function revealWordsWithRecitation(event: React.SyntheticEvent<HTMLAudioElement>) {
+    if (!hideForRecall || !currentAudioVerse) return;
+    const audio = event.currentTarget;
+    if (!Number.isFinite(audio.duration) || audio.duration <= 0) return;
+
+    const words = currentAudioVerse.text.trim().split(/\s+/);
+    const weights = words.map((word) => Math.max(1, (word.match(/[\u0621-\u064A\u066E-\u06D3]/g) ?? []).length));
+    const totalWeight = weights.reduce((sum, weight) => sum + weight, 0);
+    const elapsedWeight = (audio.currentTime / audio.duration) * totalWeight;
+    let progress = 0;
+    let passedWeight = 0;
+    for (let index = 0; index < weights.length; index += 1) {
+      passedWeight += weights[index];
+      if (elapsedWeight < passedWeight) break;
+      progress = index + 1;
+    }
+    const prefix = surahNumber + ":" + currentAudioVerse.numberInSurah + ":";
+    setHiddenWords((current) => {
+      const remaining = current.filter((key) => {
+        if (!key.startsWith(prefix) || !availableMushafWords.includes(key)) return true;
+        const wordNumber = Number(key.slice(prefix.length));
+        return !Number.isInteger(wordNumber) || wordNumber > progress;
+      });
+      return remaining.length === current.length ? current : remaining;
+    });
   }
 
   function finishCurrentAyah() {
@@ -748,7 +775,7 @@ export function MushafReader({ locale }: { locale: string }) {
                     </select>
                   </label>
                 </div>
-                <audio ref={audioRef} hidden preload="none" onEnded={finishCurrentAyah} onError={() => setPlaying(false)} />
+                <audio ref={audioRef} hidden preload="none" onTimeUpdate={revealWordsWithRecitation} onEnded={finishCurrentAyah} onError={() => setPlaying(false)} />
                 {activeTab === "memorize" && <>
                   <div className="mt-3 grid grid-cols-[1fr_auto] gap-2">
                     <label className="grid gap-1 text-xs font-semibold text-[var(--muted)]">{t.hidePercent}
