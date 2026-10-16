@@ -13,6 +13,7 @@ const translationEditions: Record<string, string> = {
 
 type ApiAyah = {
   numberInSurah: number;
+  page: number;
   text: string;
   audio?: string;
 };
@@ -72,6 +73,7 @@ export async function GET(
 
     const ayahs = arabic.data.ayahs.map((ayah, index) => ({
       numberInSurah: ayah.numberInSurah,
+      pageNumber: ayah.page,
       text: ayah.text,
       translation: translation.data.ayahs[index]?.text ?? "",
       audio: recitation.data.ayahs[index]?.audio ?? null,

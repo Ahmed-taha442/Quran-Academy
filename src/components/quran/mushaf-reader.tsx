@@ -1,12 +1,14 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { MushafPageView } from "./mushaf-page-view";
 
 type Verse = {
   numberInSurah: number;
   text: string;
   translation: string;
   audio: string | null;
+  pageNumber: number;
 };
 
 type Surah = {
@@ -88,6 +90,12 @@ const copy = {
     hidePercent: "Words to hide",
     reshuffleWords: "New word set",
     wordsHidden: "words hidden",
+    previousPage: "Previous page",
+    nextPage: "Next page",
+    mushafPage: "Mushaf page",
+    loadingMushaf: "Loading the Madinah Mushaf page…",
+    mushafUnavailable: "The printed page could not load. Check your connection and retry.",
+    verseTextDetails: "Verse text, translation, and study marks",
     play: "Play selected range",
     pause: "Pause recitation",
     repeat: "Repeat each ayah",
@@ -158,6 +166,12 @@ const copy = {
     hidePercent: "نسبة الكلمات المخفية",
     reshuffleWords: "مجموعة كلمات جديدة",
     wordsHidden: "كلمة مخفية",
+    previousPage: "الصفحة السابقة",
+    nextPage: "الصفحة التالية",
+    mushafPage: "صفحة المصحف",
+    loadingMushaf: "جارٍ تحميل صفحة مصحف المدينة…",
+    mushafUnavailable: "تعذر تحميل صفحة المصحف. تحقق من الاتصال وحاول مجددًا.",
+    verseTextDetails: "نص الآيات والترجمة وعلامات المتابعة",
     play: "استمع للنطاق المحدد",
     pause: "إيقاف التلاوة مؤقتًا",
     repeat: "تكرار كل آية",
@@ -265,6 +279,8 @@ export function MushafReader({ locale }: { locale: string }) {
   const [revealed, setRevealed] = useState<number[]>([]);
   const [hiddenWords, setHiddenWords] = useState<string[]>([]);
   const [hidePercentage, setHidePercentage] = useState(30);
+  const [mushafPage, setMushafPage] = useState(1);
+  const [mushafWordKeys, setMushafWordKeys] = useState<string[]>([]);
   const [reviewDueOnly, setReviewDueOnly] = useState(false);
   const [repeatCount, setRepeatCount] = useState(3);
   const [playing, setPlaying] = useState(false);
@@ -332,6 +348,9 @@ export function MushafReader({ locale }: { locale: string }) {
       .then((result) => {
         setData(result);
         setToAyah(result.surah.numberOfAyahs);
+        setMushafPage(result.ayahs[0]?.pageNumber ?? 1);
+        setHideForRecall(false);
+        setHiddenWords([]);
       })
       .catch(() => {
         if (!controller.signal.aborted) setLoadError(true);
@@ -356,6 +375,11 @@ export function MushafReader({ locale }: { locale: string }) {
       return !reviewDueOnly || dueKeys.includes(verseKey(surahNumber, ayah.numberInSurah));
     });
   }, [data, fromAyah, toAyah, reviewDueOnly, dueKeys, surahNumber]);
+
+  const availableMushafWords = useMemo(() => mushafWordKeys.filter((key) => {
+    const [surah, ayah] = key.split(":").map(Number);
+    return surah === surahNumber && ayah >= fromAyah && ayah <= toAyah;
+  }), [mushafWordKeys, surahNumber, fromAyah, toAyah]);
 
   const currentAudioVerse = selectedAyahs[currentIndex];
   const trackedCount = Object.keys(study.reviews).length;
@@ -410,6 +434,7 @@ export function MushafReader({ locale }: { locale: string }) {
     setRevealed([]);
     setHiddenWords([]);
     setHideForRecall(false);
+    setMushafWordKeys([]);
     setSurahNumber(number);
   }
 
@@ -420,9 +445,7 @@ export function MushafReader({ locale }: { locale: string }) {
   }
 
   function createWordChallenge() {
-    const words = selectedAyahs.flatMap((ayah) =>
-      ayah.text.trim().split(/\s+/).map((_, index) => `${ayah.numberInSurah}:${index}`),
-    );
+    const words = [...availableMushafWords];
     // Fisher–Yates gives each word an equal chance of being selected.
     for (let index = words.length - 1; index > 0; index -= 1) {
       const swapIndex = Math.floor(Math.random() * (index + 1));
@@ -436,6 +459,15 @@ export function MushafReader({ locale }: { locale: string }) {
 
   function revealWord(key: string) {
     setHiddenWords((current) => current.filter((word) => word !== key));
+  }
+
+  const handleMushafWordsLoaded = useCallback((keys: string[]) => setMushafWordKeys(keys), []);
+
+  function changeMushafPage(page: number) {
+    setMushafPage(Math.max(1, Math.min(604, page)));
+    setHideForRecall(false);
+    setHiddenWords([]);
+    setRevealed([]);
   }
 
   function recordReview(rating: ReviewRecord["rating"]) {
@@ -549,7 +581,7 @@ export function MushafReader({ locale }: { locale: string }) {
         ))}
       </div>
 
-      <div className="grid items-start gap-5 lg:grid-cols-[minmax(0,1fr)_19rem]">
+      <div className={`grid items-start gap-5 ${activeTab === "memorize" ? "lg:grid-cols-1" : "lg:grid-cols-[minmax(0,1fr)_19rem]"}`}>
         <main className="min-w-0">
           <section className="mb-4 rounded-2xl border border-[var(--border)] bg-white p-4 shadow-sm sm:p-5" aria-label={t.chooseSurah}>
             <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-[minmax(12rem,1.5fr)_1fr_1fr_auto] lg:items-end">
@@ -568,7 +600,7 @@ export function MushafReader({ locale }: { locale: string }) {
               <label className="grid gap-1.5 text-sm font-semibold text-[var(--ink)]">
                 {t.from}
                 <input type="number" min={1} max={data?.surah.numberOfAyahs ?? 1} value={fromAyah}
-                  onChange={(event) => { setPlaying(false); setCurrentIndex(0); setFromAyah(Math.max(1, Math.min(Number(event.target.value), toAyah))); setReviewDueOnly(false); }}
+                  onChange={(event) => { const nextFromAyah = Math.max(1, Math.min(Number(event.target.value), toAyah)); setPlaying(false); setCurrentIndex(0); setFromAyah(nextFromAyah); const page = data?.ayahs.find((ayah) => ayah.numberInSurah === nextFromAyah)?.pageNumber; if (page) changeMushafPage(page); setReviewDueOnly(false); }}
                   className="h-12 rounded-xl border border-[var(--border)] bg-[var(--bg)] px-3 text-sm" />
               </label>
               <label className="grid gap-1.5 text-sm font-semibold text-[var(--ink)]">
@@ -599,14 +631,27 @@ export function MushafReader({ locale }: { locale: string }) {
           )}
 
           {data && !loading && (
-            <section className="overflow-hidden rounded-3xl border border-[var(--border)] bg-[#fffefa] shadow-sm" aria-label={uiSurahName}>
+            <section className="mx-auto w-full max-w-5xl overflow-hidden rounded-[1.75rem] border-[5px] border-double border-[#c9ad71] bg-[#fffefa] shadow-[0_18px_60px_-34px_rgba(72,48,18,0.45)]" aria-label={uiSurahName}>
               <div className="border-b border-[var(--border)] bg-[var(--surface-soft)]/70 px-5 py-5 text-center sm:px-8">
                 <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[var(--gold)]">Surah {data.surah.number} · {data.surah.revelationType}</p>
                 <h2 className="mt-1 font-arabic text-3xl font-bold text-[var(--accent)] sm:text-4xl" lang="ar" dir="rtl" translate="no">{data.surah.name}</h2>
                 <p className="mt-1 text-sm text-[var(--muted)]">{data.surah.englishName} · {data.surah.englishNameTranslation} · {data.surah.numberOfAyahs} {t.ayahs}</p>
               </div>
 
-              <div className="divide-y divide-[var(--border)] px-4 sm:px-7">
+              <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[#dfd1ae] bg-[#fffdf5] px-3 py-3 sm:px-6">
+                <button type="button" onClick={() => changeMushafPage(mushafPage - 1)} disabled={mushafPage <= 1} aria-label={t.previousPage} className="min-h-11 rounded-xl border border-[#dfd1ae] px-3 text-sm font-semibold text-[var(--accent)] disabled:opacity-40">{locale === "ar" ? "→" : "←"} {t.previousPage}</button>
+                <label className="flex items-center gap-2 text-xs font-semibold text-[var(--muted)]">{t.mushafPage}
+                  <input type="number" min={1} max={604} value={mushafPage} onChange={(event) => changeMushafPage(Number(event.target.value))} className="h-11 w-20 rounded-xl border border-[#dfd1ae] bg-white px-2 text-center text-sm text-[var(--ink)]" /> <span>/ 604</span>
+                </label>
+                <button type="button" onClick={() => changeMushafPage(mushafPage + 1)} disabled={mushafPage >= 604} aria-label={t.nextPage} className="min-h-11 rounded-xl border border-[#dfd1ae] px-3 text-sm font-semibold text-[var(--accent)] disabled:opacity-40">{t.nextPage} {locale === "ar" ? "←" : "→"}</button>
+              </div>
+              <div className="p-2 sm:p-5">
+                <MushafPageView page={mushafPage} hiddenWords={hiddenWords} allowedWordKeys={availableMushafWords} challengeActive={hideForRecall} onWordsLoaded={handleMushafWordsLoaded} onRevealWord={revealWord} loadingLabel={t.loadingMushaf} errorLabel={t.mushafUnavailable} locale={locale} />
+                {hideForRecall && <p className="mx-auto mt-3 max-w-3xl text-center text-xs leading-5 text-[var(--muted)]">{locale === "ar" ? "اضغط على مواضع الكلمات المخفية للكشف عنها؛ مواضع السطور لا تتغير." : "Tap a hidden word to reveal it. The printed line layout stays in place."}</p>}
+              </div>
+              <details className="border-t border-[var(--border)] px-4 py-3 sm:px-7">
+                <summary className="min-h-10 cursor-pointer py-2 text-sm font-semibold text-[var(--accent)]">{t.verseTextDetails}</summary>
+              <div className="divide-y divide-[var(--border)]">
                 {selectedAyahs.map((ayah, index) => {
                   const key = verseKey(surahNumber, ayah.numberInSurah);
                   const bookmarked = study.bookmarks.includes(key);
@@ -629,14 +674,14 @@ export function MushafReader({ locale }: { locale: string }) {
                         </div>
                       </div>
 
-                      <p className="font-arabic rounded-xl border border-[#dfd1ae] bg-[#fffdf5] px-4 py-5 text-3xl leading-[2.2] text-[var(--ink)] shadow-inner sm:px-6 sm:text-4xl sm:leading-[2.25]" dir="rtl" lang="ar" translate="no">
+                      <p className="font-arabic rounded-xl border border-[#dfd1ae] bg-[#fffdf5] px-4 py-5 text-[clamp(1.8rem,5vw,3rem)] leading-[2.15] text-[var(--ink)] shadow-inner sm:px-8 sm:py-7 sm:leading-[2.2] lg:px-12" dir="rtl" lang="ar" translate="no">
                         {textHidden ? verseWords.map((word, wordIndex) => {
-                          const wordKey = `${ayah.numberInSurah}:${wordIndex}`;
+                          const wordKey = `${surahNumber}:${ayah.numberInSurah}:${wordIndex + 1}`;
                           const concealed = hiddenWords.includes(wordKey);
                           return <span key={wordKey} className="inline whitespace-pre-wrap">{wordIndex > 0 ? " " : ""}{concealed ? <button type="button" aria-label={locale === "ar" ? "إظهار الكلمة" : "Reveal word"} onClick={() => revealWord(wordKey)} className="rounded-sm bg-amber-100/90 text-transparent underline decoration-amber-400 decoration-dotted underline-offset-4 focus-visible:outline-2 focus-visible:outline-amber-700">{word}</button> : word}</span>;
                         }) : ayah.text}
                       </p>
-                      {textHidden && <button type="button" onClick={() => setRevealed((current) => [...current, ayah.numberInSurah])} className="mt-2 text-sm font-semibold text-[var(--accent)] underline">{t.reveal}</button>}
+                      {textHidden && <button type="button" onClick={() => setRevealed((current) => [...current, ayah.numberInSurah])} className="mt-2 min-h-10 rounded-lg px-2 text-sm font-semibold text-[var(--accent)] underline">{t.reveal}</button>}
                       {showTranslation && !textHidden && <p className="mt-3 max-w-3xl text-sm leading-7 text-[var(--muted)] sm:text-base">{ayah.translation}</p>}
                       {review && <p className="mt-2 text-xs text-[var(--accent)]">{t.savedOn}: {shortDate(review.nextReviewAt, locale)}</p>}
                     </article>
@@ -644,7 +689,8 @@ export function MushafReader({ locale }: { locale: string }) {
                 })}
                 {reviewDueOnly && selectedAyahs.length === 0 && <p className="py-10 text-center text-sm text-[var(--muted)]">{t.noneDue}</p>}
               </div>
-              <p className="border-t border-[var(--border)] bg-white px-4 py-3 text-xs leading-6 text-[var(--muted)] sm:px-7">{t.translationHint}<br /><a href="https://alquran.cloud/api" target="_blank" rel="noreferrer" className="font-medium text-[var(--accent)] underline">{t.provider}</a> · {t.attribution}: {data.translationSource}.</p>
+              <p className="border-t border-[var(--border)] bg-white px-4 py-3 text-xs leading-6 text-[var(--muted)] sm:px-7">{t.translationHint}<br /><a href="https://alquran.cloud/api" target="_blank" rel="noreferrer" className="font-medium text-[var(--accent)] underline">{t.provider}</a> · {t.attribution}: {data.translationSource}. {locale === "ar" ? "صفحة مصحف المدينة وعناصر الكلمات من Quran.ws، برسم مجمع الملك فهد." : "Madinah Mushaf page and word assets from Quran.ws; artwork by King Fahd Complex."}</p>
+              </details>
             </section>
           )}
         </main>
@@ -670,11 +716,11 @@ export function MushafReader({ locale }: { locale: string }) {
                 {activeTab === "memorize" && <>
                   <div className="mt-3 grid grid-cols-[1fr_auto] gap-2">
                     <label className="grid gap-1 text-xs font-semibold text-[var(--muted)]">{t.hidePercent}
-                      <select value={hidePercentage} onChange={(event) => setHidePercentage(Number(event.target.value))} className="h-11 rounded-xl border border-[var(--border)] bg-white px-3 text-sm text-[var(--ink)]"><option value={20}>20%</option><option value={30}>30%</option><option value={50}>50%</option></select>
+                      <select value={hidePercentage} onChange={(event) => setHidePercentage(Number(event.target.value))} className="h-11 rounded-xl border border-[var(--border)] bg-white px-3 text-sm text-[var(--ink)]"><option value={20}>20%</option><option value={30}>30%</option><option value={50}>50%</option><option value={70}>70%</option><option value={80}>80%</option><option value={90}>90%</option><option value={100}>100%</option></select>
                     </label>
-                    <button type="button" onClick={createWordChallenge} disabled={!selectedAyahs.length} className="mt-5 min-h-11 rounded-xl bg-amber-100 px-3 text-xs font-semibold text-amber-950 hover:bg-amber-200 disabled:opacity-50">{hideForRecall ? t.reshuffleWords : t.hideWords}</button>
+                    <button type="button" onClick={createWordChallenge} disabled={!availableMushafWords.length} className="mt-5 min-h-11 rounded-xl bg-amber-100 px-3 text-xs font-semibold text-amber-950 hover:bg-amber-200 disabled:opacity-50">{hideForRecall ? t.reshuffleWords : t.hideWords}</button>
                   </div>
-                  {hideForRecall && <div className="mt-2 flex items-center justify-between gap-2 text-xs text-[var(--muted)]"><span>{hiddenWords.length} {t.wordsHidden}</span><button type="button" onClick={() => { setHiddenWords([]); setRevealed(selectedAyahs.map((ayah) => ayah.numberInSurah)); }} className="font-semibold text-[var(--accent)] underline">{t.showAllWords}</button></div>}
+                  {hideForRecall && <div className="mt-2 flex items-center justify-between gap-2 text-xs text-[var(--muted)]"><span>{hiddenWords.filter((key) => availableMushafWords.includes(key)).length} {t.wordsHidden}</span><button type="button" onClick={() => { setHiddenWords([]); setRevealed(selectedAyahs.map((ayah) => ayah.numberInSurah)); }} className="font-semibold text-[var(--accent)] underline">{t.showAllWords}</button></div>}
                   <p className="mt-3 text-xs leading-5 text-[var(--muted)]">{t.ratingHint}</p>
                   <div className="mt-3 grid grid-cols-2 gap-2">
                     {([["again", t.again], ["hard", t.hard], ["good", t.good], ["easy", t.easy]] as const).map(([rating, label]) => (
