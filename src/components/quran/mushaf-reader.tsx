@@ -226,7 +226,7 @@ const copy = {
     days: "أيام",
     noneDue: "لا توجد آيات مستحقة للمراجعة اليوم في هذا النطاق.",
     playAyah: "استمع لهذه الآية",
-    reciter: "القارئ: مشاري العفاسي",
+    reciter: "\u0627\u0644\u0642\u0627\u0631\u0626: \u0627\u0644\u0634\u064a\u062e \u0645\u062d\u0645\u0648\u062f \u062e\u0644\u064a\u0644 \u0627\u0644\u062d\u0635\u0631\u064a",
   },
 } as const;
 
@@ -392,8 +392,12 @@ export function MushafReader({ locale }: { locale: string }) {
   const bookmarkCount = study.bookmarks.length;
 
   useEffect(() => {
-    if (!playing || !currentAudioVerse?.audio || !audioRef.current) return;
     const player = audioRef.current;
+    if (!player) return;
+    if (!playing || !currentAudioVerse?.audio) {
+      player.pause();
+      return;
+    }
     player.src = currentAudioVerse.audio;
     player.load();
     void player.play().catch(() => setPlaying(false));
@@ -765,7 +769,7 @@ export function MushafReader({ locale }: { locale: string }) {
                 <h2 className="font-semibold text-[var(--ink)]">{activeTab === "read" ? t.read : t.memorize}</h2>
                 <p className="mt-1 text-xs leading-5 text-[var(--muted)]">{t.reciter}</p>
                 <div className="mt-4 grid grid-cols-[1fr_auto] gap-2">
-                  <button type="button" onClick={() => playing ? setPlaying(false) : startPlayback(0)} disabled={!selectedAyahs.some((ayah) => ayah.audio)} className="min-h-11 rounded-xl bg-[var(--accent)] px-4 text-sm font-semibold text-white hover:bg-[var(--accent-hover)] disabled:opacity-50">
+                  <button type="button" onClick={() => { if (playing) { audioRef.current?.pause(); setPlaying(false); } else startPlayback(0); }} disabled={!selectedAyahs.some((ayah) => ayah.audio)} className="min-h-11 rounded-xl bg-[var(--accent)] px-4 text-sm font-semibold text-white hover:bg-[var(--accent-hover)] disabled:opacity-50">
                     {playing ? t.pause : t.play}
                   </button>
                   <label className="grid gap-0.5 text-[10px] font-semibold text-[var(--muted)]">
