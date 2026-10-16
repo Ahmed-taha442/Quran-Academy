@@ -90,6 +90,7 @@ const copy = {
     hidePercent: "Words to hide",
     reshuffleWords: "New word set",
     wordsHidden: "words hidden",
+    showNextWord: "Reveal next word",
     previousPage: "Previous page",
     nextPage: "Next page",
     mushafPage: "Mushaf page",
@@ -166,6 +167,7 @@ const copy = {
     hidePercent: "نسبة الكلمات المخفية",
     reshuffleWords: "مجموعة كلمات جديدة",
     wordsHidden: "كلمة مخفية",
+    showNextWord: "أظهر الكلمة التالية",
     previousPage: "الصفحة السابقة",
     nextPage: "الصفحة التالية",
     mushafPage: "صفحة المصحف",
@@ -451,8 +453,10 @@ export function MushafReader({ locale }: { locale: string }) {
       const swapIndex = Math.floor(Math.random() * (index + 1));
       [words[index], words[swapIndex]] = [words[swapIndex], words[index]];
     }
-    const count = Math.max(1, Math.round((words.length * hidePercentage) / 100));
-    setHiddenWords(words.slice(0, count));
+    const count = Math.min(words.length, Math.max(1, Math.round((words.length * hidePercentage) / 100)));
+    const hiddenSet = new Set(words.slice(0, count));
+    // Keep reveal order aligned with the printed page while the selection stays random.
+    setHiddenWords(availableMushafWords.filter((key) => hiddenSet.has(key)));
     setRevealed([]);
     setHideForRecall(true);
   }
@@ -646,7 +650,7 @@ export function MushafReader({ locale }: { locale: string }) {
                 <button type="button" onClick={() => changeMushafPage(mushafPage + 1)} disabled={mushafPage >= 604} aria-label={t.nextPage} className="min-h-11 rounded-xl border border-[#dfd1ae] px-3 text-sm font-semibold text-[var(--accent)] disabled:opacity-40">{t.nextPage} {locale === "ar" ? "←" : "→"}</button>
               </div>
               <div className="p-2 sm:p-5">
-                <MushafPageView page={mushafPage} hiddenWords={hiddenWords} allowedWordKeys={availableMushafWords} challengeActive={hideForRecall} onWordsLoaded={handleMushafWordsLoaded} onRevealWord={revealWord} loadingLabel={t.loadingMushaf} errorLabel={t.mushafUnavailable} locale={locale} />
+                <MushafPageView page={mushafPage} hiddenWords={hiddenWords} allowedWordKeys={availableMushafWords} challengeActive={hideForRecall} onWordsLoaded={handleMushafWordsLoaded} loadingLabel={t.loadingMushaf} errorLabel={t.mushafUnavailable} locale={locale} />
                 {hideForRecall && <p className="mx-auto mt-3 max-w-3xl text-center text-xs leading-5 text-[var(--muted)]">{locale === "ar" ? "اضغط على مواضع الكلمات المخفية للكشف عنها؛ مواضع السطور لا تتغير." : "Tap a hidden word to reveal it. The printed line layout stays in place."}</p>}
               </div>
               <details className="border-t border-[var(--border)] px-4 py-3 sm:px-7">
@@ -720,7 +724,10 @@ export function MushafReader({ locale }: { locale: string }) {
                     </label>
                     <button type="button" onClick={createWordChallenge} disabled={!availableMushafWords.length} className="mt-5 min-h-11 rounded-xl bg-amber-100 px-3 text-xs font-semibold text-amber-950 hover:bg-amber-200 disabled:opacity-50">{hideForRecall ? t.reshuffleWords : t.hideWords}</button>
                   </div>
-                  {hideForRecall && <div className="mt-2 flex items-center justify-between gap-2 text-xs text-[var(--muted)]"><span>{hiddenWords.filter((key) => availableMushafWords.includes(key)).length} {t.wordsHidden}</span><button type="button" onClick={() => { setHiddenWords([]); setRevealed(selectedAyahs.map((ayah) => ayah.numberInSurah)); }} className="font-semibold text-[var(--accent)] underline">{t.showAllWords}</button></div>}
+                  {hideForRecall && <div className="mt-2 grid gap-2">
+                    <button type="button" onClick={() => setHiddenWords((current) => { const next = current.find((key) => availableMushafWords.includes(key)); return next ? current.filter((key) => key !== next) : current; })} disabled={!hiddenWords.some((key) => availableMushafWords.includes(key))} className="min-h-12 w-full rounded-xl bg-emerald-800 px-4 text-sm font-bold text-white shadow-sm hover:bg-emerald-900 disabled:cursor-not-allowed disabled:opacity-50">{t.showNextWord}</button>
+                    <div className="flex items-center justify-between gap-2 text-xs text-[var(--muted)]"><span>{hiddenWords.filter((key) => availableMushafWords.includes(key)).length} {t.wordsHidden}</span><button type="button" onClick={() => { setHiddenWords([]); setRevealed(selectedAyahs.map((ayah) => ayah.numberInSurah)); }} className="min-h-10 font-semibold text-[var(--accent)] underline">{t.showAllWords}</button></div>
+                  </div>}
                   <p className="mt-3 text-xs leading-5 text-[var(--muted)]">{t.ratingHint}</p>
                   <div className="mt-3 grid grid-cols-2 gap-2">
                     {([["again", t.again], ["hard", t.hard], ["good", t.good], ["easy", t.easy]] as const).map(([rating, label]) => (
