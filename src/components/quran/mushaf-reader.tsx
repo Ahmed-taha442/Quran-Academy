@@ -83,6 +83,11 @@ const copy = {
     translation: "Show translation",
     hide: "Test my recall",
     reveal: "Show ayah",
+    hideWords: "Hide random words",
+    showAllWords: "Reveal all words",
+    hidePercent: "Words to hide",
+    reshuffleWords: "New word set",
+    wordsHidden: "words hidden",
     play: "Play selected range",
     pause: "Pause recitation",
     repeat: "Repeat each ayah",
@@ -148,6 +153,11 @@ const copy = {
     translation: "إظهار المعنى بالترجمة",
     hide: "اختبر حفظي",
     reveal: "إظهار الآية",
+    hideWords: "إخفاء كلمات عشوائية",
+    showAllWords: "إظهار كل الكلمات",
+    hidePercent: "نسبة الكلمات المخفية",
+    reshuffleWords: "مجموعة كلمات جديدة",
+    wordsHidden: "كلمة مخفية",
     play: "استمع للنطاق المحدد",
     pause: "إيقاف التلاوة مؤقتًا",
     repeat: "تكرار كل آية",
@@ -253,6 +263,8 @@ export function MushafReader({ locale }: { locale: string }) {
   const [showTranslation, setShowTranslation] = useState(true);
   const [hideForRecall, setHideForRecall] = useState(false);
   const [revealed, setRevealed] = useState<number[]>([]);
+  const [hiddenWords, setHiddenWords] = useState<string[]>([]);
+  const [hidePercentage, setHidePercentage] = useState(30);
   const [reviewDueOnly, setReviewDueOnly] = useState(false);
   const [repeatCount, setRepeatCount] = useState(3);
   const [playing, setPlaying] = useState(false);
@@ -396,6 +408,8 @@ export function MushafReader({ locale }: { locale: string }) {
     setToAyah(1);
     setCurrentIndex(0);
     setRevealed([]);
+    setHiddenWords([]);
+    setHideForRecall(false);
     setSurahNumber(number);
   }
 
@@ -403,6 +417,25 @@ export function MushafReader({ locale }: { locale: string }) {
     setLoading(true);
     setLoadError(false);
     setReloadKey((key) => key + 1);
+  }
+
+  function createWordChallenge() {
+    const words = selectedAyahs.flatMap((ayah) =>
+      ayah.text.trim().split(/\s+/).map((_, index) => `${ayah.numberInSurah}:${index}`),
+    );
+    // Fisher–Yates gives each word an equal chance of being selected.
+    for (let index = words.length - 1; index > 0; index -= 1) {
+      const swapIndex = Math.floor(Math.random() * (index + 1));
+      [words[index], words[swapIndex]] = [words[swapIndex], words[index]];
+    }
+    const count = Math.max(1, Math.round((words.length * hidePercentage) / 100));
+    setHiddenWords(words.slice(0, count));
+    setRevealed([]);
+    setHideForRecall(true);
+  }
+
+  function revealWord(key: string) {
+    setHiddenWords((current) => current.filter((word) => word !== key));
   }
 
   function recordReview(rating: ReviewRecord["rating"]) {
@@ -580,6 +613,7 @@ export function MushafReader({ locale }: { locale: string }) {
                   const review = study.reviews[key];
                   const isRevealed = revealed.includes(ayah.numberInSurah);
                   const textHidden = hideForRecall && !isRevealed;
+                  const verseWords = ayah.text.trim().split(/\s+/);
 
                   return (
                     <article key={ayah.numberInSurah} className={`py-5 sm:py-6 ${currentAudioVerse?.numberInSurah === ayah.numberInSurah && playing ? "bg-emerald-50/70" : ""}`}>
@@ -595,8 +629,12 @@ export function MushafReader({ locale }: { locale: string }) {
                         </div>
                       </div>
 
-                      <p className={`font-arabic text-3xl leading-[2.15] text-[var(--ink)] sm:text-4xl sm:leading-[2.2] ${textHidden ? "select-none rounded-xl bg-stone-100 py-2 text-transparent" : ""}`} dir="rtl" lang="ar" translate="no">
-                        {textHidden ? "هذا موضع اختبار استرجاع الآية" : ayah.text}
+                      <p className="font-arabic rounded-xl border border-[#dfd1ae] bg-[#fffdf5] px-4 py-5 text-3xl leading-[2.2] text-[var(--ink)] shadow-inner sm:px-6 sm:text-4xl sm:leading-[2.25]" dir="rtl" lang="ar" translate="no">
+                        {textHidden ? verseWords.map((word, wordIndex) => {
+                          const wordKey = `${ayah.numberInSurah}:${wordIndex}`;
+                          const concealed = hiddenWords.includes(wordKey);
+                          return <span key={wordKey} className="inline whitespace-pre-wrap">{wordIndex > 0 ? " " : ""}{concealed ? <button type="button" aria-label={locale === "ar" ? "إظهار الكلمة" : "Reveal word"} onClick={() => revealWord(wordKey)} className="rounded-sm bg-amber-100/90 text-transparent underline decoration-amber-400 decoration-dotted underline-offset-4 focus-visible:outline-2 focus-visible:outline-amber-700">{word}</button> : word}</span>;
+                        }) : ayah.text}
                       </p>
                       {textHidden && <button type="button" onClick={() => setRevealed((current) => [...current, ayah.numberInSurah])} className="mt-2 text-sm font-semibold text-[var(--accent)] underline">{t.reveal}</button>}
                       {showTranslation && !textHidden && <p className="mt-3 max-w-3xl text-sm leading-7 text-[var(--muted)] sm:text-base">{ayah.translation}</p>}
@@ -630,9 +668,13 @@ export function MushafReader({ locale }: { locale: string }) {
                 </div>
                 <audio ref={audioRef} hidden preload="none" onEnded={finishCurrentAyah} onError={() => setPlaying(false)} />
                 {activeTab === "memorize" && <>
-                  <button type="button" aria-pressed={hideForRecall} onClick={() => { setHideForRecall((hidden) => !hidden); setRevealed([]); }} className={`mt-3 min-h-11 w-full rounded-xl border px-4 text-sm font-semibold ${hideForRecall ? "border-amber-300 bg-amber-50 text-amber-900" : "border-[var(--border)] text-[var(--accent)] hover:bg-[var(--surface-soft)]"}`}>
-                    {hideForRecall ? t.reveal : t.hide}
-                  </button>
+                  <div className="mt-3 grid grid-cols-[1fr_auto] gap-2">
+                    <label className="grid gap-1 text-xs font-semibold text-[var(--muted)]">{t.hidePercent}
+                      <select value={hidePercentage} onChange={(event) => setHidePercentage(Number(event.target.value))} className="h-11 rounded-xl border border-[var(--border)] bg-white px-3 text-sm text-[var(--ink)]"><option value={20}>20%</option><option value={30}>30%</option><option value={50}>50%</option></select>
+                    </label>
+                    <button type="button" onClick={createWordChallenge} disabled={!selectedAyahs.length} className="mt-5 min-h-11 rounded-xl bg-amber-100 px-3 text-xs font-semibold text-amber-950 hover:bg-amber-200 disabled:opacity-50">{hideForRecall ? t.reshuffleWords : t.hideWords}</button>
+                  </div>
+                  {hideForRecall && <div className="mt-2 flex items-center justify-between gap-2 text-xs text-[var(--muted)]"><span>{hiddenWords.length} {t.wordsHidden}</span><button type="button" onClick={() => { setHiddenWords([]); setRevealed(selectedAyahs.map((ayah) => ayah.numberInSurah)); }} className="font-semibold text-[var(--accent)] underline">{t.showAllWords}</button></div>}
                   <p className="mt-3 text-xs leading-5 text-[var(--muted)]">{t.ratingHint}</p>
                   <div className="mt-3 grid grid-cols-2 gap-2">
                     {([["again", t.again], ["hard", t.hard], ["good", t.good], ["easy", t.easy]] as const).map(([rating, label]) => (
