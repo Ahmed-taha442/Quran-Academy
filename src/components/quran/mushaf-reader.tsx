@@ -91,6 +91,7 @@ const copy = {
     reshuffleWords: "New word set",
     wordsHidden: "words hidden",
     showNextWord: "Reveal next word",
+    revealKeyboardHint: "Keyboard: press Space to reveal the next word",
     previousPage: "Previous page",
     nextPage: "Next page",
     mushafPage: "Mushaf page",
@@ -168,6 +169,7 @@ const copy = {
     reshuffleWords: "مجموعة كلمات جديدة",
     wordsHidden: "كلمة مخفية",
     showNextWord: "أظهر الكلمة التالية",
+    revealKeyboardHint: "من لوحة المفاتيح: اضغط مسافة لإظهار الكلمة التالية",
     previousPage: "الصفحة السابقة",
     nextPage: "الصفحة التالية",
     mushafPage: "صفحة المصحف",
@@ -382,6 +384,7 @@ export function MushafReader({ locale }: { locale: string }) {
     const [surah, ayah] = key.split(":").map(Number);
     return surah === surahNumber && ayah >= fromAyah && ayah <= toAyah;
   }), [mushafWordKeys, surahNumber, fromAyah, toAyah]);
+  const hiddenWordCount = hiddenWords.filter((key) => availableMushafWords.includes(key)).length;
 
   const currentAudioVerse = selectedAyahs[currentIndex];
   const trackedCount = Object.keys(study.reviews).length;
@@ -464,6 +467,25 @@ export function MushafReader({ locale }: { locale: string }) {
   function revealWord(key: string) {
     setHiddenWords((current) => current.filter((word) => word !== key));
   }
+
+  const revealNextWord = useCallback(() => {
+    setHiddenWords((current) => {
+      const next = current.find((key) => availableMushafWords.includes(key));
+      return next ? current.filter((key) => key !== next) : current;
+    });
+  }, [availableMushafWords]);
+
+  useEffect(() => {
+    function handleRecallShortcut(event: KeyboardEvent) {
+      if (!hideForRecall || event.code !== "Space" || event.repeat) return;
+      const target = event.target;
+      if (target instanceof Element && target.closest("input, textarea, select, button, a, [role='button'], [contenteditable='true']")) return;
+      event.preventDefault();
+      revealNextWord();
+    }
+    window.addEventListener("keydown", handleRecallShortcut);
+    return () => window.removeEventListener("keydown", handleRecallShortcut);
+  }, [hideForRecall, revealNextWord]);
 
   const handleMushafWordsLoaded = useCallback((keys: string[]) => setMushafWordKeys(keys), []);
 
@@ -585,7 +607,7 @@ export function MushafReader({ locale }: { locale: string }) {
         ))}
       </div>
 
-      <div className={`grid items-start gap-5 ${activeTab === "memorize" ? "lg:grid-cols-1" : "lg:grid-cols-[minmax(0,1fr)_19rem]"}`}>
+      <div className={`grid items-start gap-5 ${activeTab !== "teacher" ? "lg:grid-cols-1" : "lg:grid-cols-[minmax(0,1fr)_19rem]"}`}>
         <main className="min-w-0">
           <section className="mb-4 rounded-2xl border border-[var(--border)] bg-white p-4 shadow-sm sm:p-5" aria-label={t.chooseSurah}>
             <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-[minmax(12rem,1.5fr)_1fr_1fr_auto] lg:items-end">
@@ -635,23 +657,28 @@ export function MushafReader({ locale }: { locale: string }) {
           )}
 
           {data && !loading && (
-            <section className="mx-auto w-full max-w-5xl overflow-hidden rounded-[1.75rem] border-[5px] border-double border-[#c9ad71] bg-[#fffefa] shadow-[0_18px_60px_-34px_rgba(72,48,18,0.45)]" aria-label={uiSurahName}>
+            <section className="mx-auto w-full max-w-6xl overflow-hidden rounded-[1.75rem] border-[5px] border-double border-[#c9ad71] bg-[#fffefa] shadow-[0_18px_60px_-34px_rgba(72,48,18,0.45)]" aria-label={uiSurahName}>
               <div className="border-b border-[var(--border)] bg-[var(--surface-soft)]/70 px-5 py-5 text-center sm:px-8">
                 <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[var(--gold)]">Surah {data.surah.number} · {data.surah.revelationType}</p>
                 <h2 className="mt-1 font-arabic text-3xl font-bold text-[var(--accent)] sm:text-4xl" lang="ar" dir="rtl" translate="no">{data.surah.name}</h2>
                 <p className="mt-1 text-sm text-[var(--muted)]">{data.surah.englishName} · {data.surah.englishNameTranslation} · {data.surah.numberOfAyahs} {t.ayahs}</p>
               </div>
 
-              <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[#dfd1ae] bg-[#fffdf5] px-3 py-3 sm:px-6">
+              <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[#dfd1ae] bg-[#fffdf5] px-3 py-3 sm:px-6">
                 <button type="button" onClick={() => changeMushafPage(mushafPage - 1)} disabled={mushafPage <= 1} aria-label={t.previousPage} className="min-h-11 rounded-xl border border-[#dfd1ae] px-3 text-sm font-semibold text-[var(--accent)] disabled:opacity-40">{locale === "ar" ? "→" : "←"} {t.previousPage}</button>
                 <label className="flex items-center gap-2 text-xs font-semibold text-[var(--muted)]">{t.mushafPage}
                   <input type="number" min={1} max={604} value={mushafPage} onChange={(event) => changeMushafPage(Number(event.target.value))} className="h-11 w-20 rounded-xl border border-[#dfd1ae] bg-white px-2 text-center text-sm text-[var(--ink)]" /> <span>/ 604</span>
                 </label>
                 <button type="button" onClick={() => changeMushafPage(mushafPage + 1)} disabled={mushafPage >= 604} aria-label={t.nextPage} className="min-h-11 rounded-xl border border-[#dfd1ae] px-3 text-sm font-semibold text-[var(--accent)] disabled:opacity-40">{t.nextPage} {locale === "ar" ? "←" : "→"}</button>
+                {hideForRecall && <div className="flex w-full flex-wrap items-center gap-2 border-t border-[#eadfca] pt-2 sm:w-auto sm:border-0 sm:pt-0">
+                  <button type="button" onClick={revealNextWord} disabled={hiddenWordCount === 0} aria-keyshortcuts="Space" className="min-h-12 flex-1 rounded-xl bg-emerald-800 px-4 text-sm font-bold text-white shadow-sm hover:bg-emerald-900 disabled:cursor-not-allowed disabled:opacity-50 sm:flex-none">{t.showNextWord} <kbd className="ms-2 rounded-md border border-white/30 bg-white/15 px-1.5 py-0.5 text-xs font-semibold">Space</kbd></button>
+                  <button type="button" onClick={() => { setHiddenWords([]); setRevealed(selectedAyahs.map((ayah) => ayah.numberInSurah)); }} disabled={hiddenWordCount === 0} className="min-h-11 rounded-xl px-3 text-sm font-semibold text-[var(--accent)] underline disabled:opacity-50">{t.showAllWords}</button>
+                  <span className="w-full text-center text-xs text-[var(--muted)] sm:w-auto sm:text-start">{hiddenWordCount} {t.wordsHidden}</span>
+                </div>}
               </div>
               <div className="p-2 sm:p-5">
                 <MushafPageView page={mushafPage} hiddenWords={hiddenWords} allowedWordKeys={availableMushafWords} challengeActive={hideForRecall} onWordsLoaded={handleMushafWordsLoaded} loadingLabel={t.loadingMushaf} errorLabel={t.mushafUnavailable} locale={locale} />
-                {hideForRecall && <p className="mx-auto mt-3 max-w-3xl text-center text-xs leading-5 text-[var(--muted)]">{locale === "ar" ? "اضغط على مواضع الكلمات المخفية للكشف عنها؛ مواضع السطور لا تتغير." : "Tap a hidden word to reveal it. The printed line layout stays in place."}</p>}
+                {hideForRecall && <p className="mx-auto mt-3 max-w-3xl text-center text-xs leading-5 text-[var(--muted)]">{t.revealKeyboardHint}</p>}
               </div>
               <details className="border-t border-[var(--border)] px-4 py-3 sm:px-7">
                 <summary className="min-h-10 cursor-pointer py-2 text-sm font-semibold text-[var(--accent)]">{t.verseTextDetails}</summary>
@@ -724,10 +751,6 @@ export function MushafReader({ locale }: { locale: string }) {
                     </label>
                     <button type="button" onClick={createWordChallenge} disabled={!availableMushafWords.length} className="mt-5 min-h-11 rounded-xl bg-amber-100 px-3 text-xs font-semibold text-amber-950 hover:bg-amber-200 disabled:opacity-50">{hideForRecall ? t.reshuffleWords : t.hideWords}</button>
                   </div>
-                  {hideForRecall && <div className="mt-2 grid gap-2">
-                    <button type="button" onClick={() => setHiddenWords((current) => { const next = current.find((key) => availableMushafWords.includes(key)); return next ? current.filter((key) => key !== next) : current; })} disabled={!hiddenWords.some((key) => availableMushafWords.includes(key))} className="min-h-12 w-full rounded-xl bg-emerald-800 px-4 text-sm font-bold text-white shadow-sm hover:bg-emerald-900 disabled:cursor-not-allowed disabled:opacity-50">{t.showNextWord}</button>
-                    <div className="flex items-center justify-between gap-2 text-xs text-[var(--muted)]"><span>{hiddenWords.filter((key) => availableMushafWords.includes(key)).length} {t.wordsHidden}</span><button type="button" onClick={() => { setHiddenWords([]); setRevealed(selectedAyahs.map((ayah) => ayah.numberInSurah)); }} className="min-h-10 font-semibold text-[var(--accent)] underline">{t.showAllWords}</button></div>
-                  </div>}
                   <p className="mt-3 text-xs leading-5 text-[var(--muted)]">{t.ratingHint}</p>
                   <div className="mt-3 grid grid-cols-2 gap-2">
                     {([["again", t.again], ["hard", t.hard], ["good", t.good], ["easy", t.easy]] as const).map(([rating, label]) => (
