@@ -101,7 +101,7 @@ export function MushafPageView({
   }, [hiddenWords, allowedWordKeys, challengeActive, locale, status, page]);
 
   return (
-    <div className="relative mx-auto flex h-[min(92dvh,88rem)] min-h-[30rem] w-full max-w-5xl items-center justify-center overflow-auto rounded-xl border border-[#dedede] bg-white p-0 shadow-sm sm:min-h-[40rem] sm:p-1" aria-busy={status === "loading"}>
+    <div className="relative mx-auto flex h-[min(calc(100dvh-15rem),88rem)] min-h-[30rem] w-full max-w-none items-center justify-center overflow-auto rounded-xl border border-[#dedede] bg-white p-0 shadow-sm sm:min-h-[40rem] sm:p-1" aria-busy={status === "loading"}>
       <div ref={hostRef} className="h-full max-w-full [&>svg]:max-h-full" />
       {status !== "ready" && <p role={status === "error" ? "alert" : "status"} className="absolute inset-x-4 top-1/2 -translate-y-1/2 rounded-xl bg-white/95 p-4 text-center text-sm font-medium text-[var(--muted)] shadow-sm">{status === "loading" ? loadingLabel : errorLabel}</p>}
     </div>

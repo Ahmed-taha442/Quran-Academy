@@ -572,7 +572,7 @@ export function MushafReader({ locale }: { locale: string }) {
   const uiSurahName = data ? `${data.surah.englishName} · ${data.surah.name}` : "";
 
   return (
-    <div className="mx-auto max-w-7xl px-4 py-7 sm:px-6 sm:py-10 lg:px-8" dir={locale === "ar" || locale === "ur" ? "rtl" : "ltr"}>
+    <div className="mx-auto max-w-[100rem] px-3 py-5 sm:px-6 sm:py-8 lg:px-8" dir={locale === "ar" || locale === "ur" ? "rtl" : "ltr"}>
       <div className="mb-6 overflow-hidden rounded-3xl bg-[linear-gradient(135deg,#163d30_0%,#28634a_62%,#66815d_100%)] p-5 text-white shadow-lg shadow-emerald-950/10 sm:p-8">
         <div className="flex flex-wrap items-start justify-between gap-5">
           <div className="max-w-2xl">
@@ -607,7 +607,7 @@ export function MushafReader({ locale }: { locale: string }) {
         ))}
       </div>
 
-      <div className={`grid items-start gap-5 ${activeTab !== "teacher" ? "lg:grid-cols-1" : "lg:grid-cols-[minmax(0,1fr)_19rem]"}`}>
+      <div className={`grid items-start gap-4 xl:gap-6 lg:grid-cols-[minmax(0,1fr)_19rem]`}>
         <main className="min-w-0">
           <section className="mb-4 rounded-2xl border border-[var(--border)] bg-white p-4 shadow-sm sm:p-5" aria-label={t.chooseSurah}>
             <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-[minmax(12rem,1.5fr)_1fr_1fr_auto] lg:items-end">
@@ -657,29 +657,18 @@ export function MushafReader({ locale }: { locale: string }) {
           )}
 
           {data && !loading && (
-            <section className="mx-auto w-full max-w-6xl overflow-hidden rounded-[1.75rem] border-[5px] border-double border-[#c9ad71] bg-[#fffefa] shadow-[0_18px_60px_-34px_rgba(72,48,18,0.45)]" aria-label={uiSurahName}>
+            <section className="mx-auto w-full min-w-0 overflow-hidden rounded-xl border-[3px] border-double border-[#c9ad71] bg-white shadow-[0_16px_48px_-28px_rgba(72,48,18,0.4)]" aria-label={uiSurahName}>
               <div className="border-b border-[var(--border)] bg-[var(--surface-soft)]/70 px-5 py-5 text-center sm:px-8">
                 <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[var(--gold)]">Surah {data.surah.number} · {data.surah.revelationType}</p>
                 <h2 className="mt-1 font-arabic text-3xl font-bold text-[var(--accent)] sm:text-4xl" lang="ar" dir="rtl" translate="no">{data.surah.name}</h2>
                 <p className="mt-1 text-sm text-[var(--muted)]">{data.surah.englishName} · {data.surah.englishNameTranslation} · {data.surah.numberOfAyahs} {t.ayahs}</p>
               </div>
 
-              <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[#dfd1ae] bg-[#fffdf5] px-3 py-3 sm:px-6">
-                <button type="button" onClick={() => changeMushafPage(mushafPage - 1)} disabled={mushafPage <= 1} aria-label={t.previousPage} className="min-h-11 rounded-xl border border-[#dfd1ae] px-3 text-sm font-semibold text-[var(--accent)] disabled:opacity-40">{locale === "ar" ? "→" : "←"} {t.previousPage}</button>
-                <label className="flex items-center gap-2 text-xs font-semibold text-[var(--muted)]">{t.mushafPage}
-                  <input type="number" min={1} max={604} value={mushafPage} onChange={(event) => changeMushafPage(Number(event.target.value))} className="h-11 w-20 rounded-xl border border-[#dfd1ae] bg-white px-2 text-center text-sm text-[var(--ink)]" /> <span>/ 604</span>
-                </label>
-                <button type="button" onClick={() => changeMushafPage(mushafPage + 1)} disabled={mushafPage >= 604} aria-label={t.nextPage} className="min-h-11 rounded-xl border border-[#dfd1ae] px-3 text-sm font-semibold text-[var(--accent)] disabled:opacity-40">{t.nextPage} {locale === "ar" ? "←" : "→"}</button>
-                {hideForRecall && <div className="flex w-full flex-wrap items-center gap-2 border-t border-[#eadfca] pt-2 sm:w-auto sm:border-0 sm:pt-0">
-                  <button type="button" onClick={revealNextWord} disabled={hiddenWordCount === 0} aria-keyshortcuts="Space" className="min-h-12 flex-1 rounded-xl bg-emerald-800 px-4 text-sm font-bold text-white shadow-sm hover:bg-emerald-900 disabled:cursor-not-allowed disabled:opacity-50 sm:flex-none">{t.showNextWord} <kbd className="ms-2 rounded-md border border-white/30 bg-white/15 px-1.5 py-0.5 text-xs font-semibold">Space</kbd></button>
-                  <button type="button" onClick={() => { setHiddenWords([]); setRevealed(selectedAyahs.map((ayah) => ayah.numberInSurah)); }} disabled={hiddenWordCount === 0} className="min-h-11 rounded-xl px-3 text-sm font-semibold text-[var(--accent)] underline disabled:opacity-50">{t.showAllWords}</button>
-                  <span className="w-full text-center text-xs text-[var(--muted)] sm:w-auto sm:text-start">{hiddenWordCount} {t.wordsHidden}</span>
-                </div>}
-              </div>
-              <div className="p-2 sm:p-5">
+              <div className="p-1 sm:p-2">
                 <MushafPageView page={mushafPage} hiddenWords={hiddenWords} allowedWordKeys={availableMushafWords} challengeActive={hideForRecall} onWordsLoaded={handleMushafWordsLoaded} loadingLabel={t.loadingMushaf} errorLabel={t.mushafUnavailable} locale={locale} />
-                {hideForRecall && <p className="mx-auto mt-3 max-w-3xl text-center text-xs leading-5 text-[var(--muted)]">{t.revealKeyboardHint}</p>}
+
               </div>
+              <div className="border-t border-[#d7c79e] bg-white px-3 py-1 text-center text-xs text-[#51452c]">{mushafPage}</div>
               <details className="border-t border-[var(--border)] px-4 py-3 sm:px-7">
                 <summary className="min-h-10 cursor-pointer py-2 text-sm font-semibold text-[var(--accent)]">{t.verseTextDetails}</summary>
               <div className="divide-y divide-[var(--border)]">
@@ -727,6 +716,22 @@ export function MushafReader({ locale }: { locale: string }) {
         </main>
 
         <aside className="grid gap-4 lg:sticky lg:top-24">
+          {(activeTab === "read" || activeTab === "memorize") && (
+            <section className="rounded-2xl border border-[var(--border)] bg-white p-4 shadow-sm sm:p-5">
+              <h2 className="font-semibold text-[var(--ink)]">{t.mushafPage}</h2>
+              <div className="mt-3 grid grid-cols-2 gap-2">
+                <button type="button" onClick={() => changeMushafPage(mushafPage - 1)} disabled={mushafPage <= 1} aria-label={t.previousPage} className="min-h-11 rounded-xl border border-[var(--border)] px-2 text-xs font-semibold text-[var(--accent)] disabled:opacity-40">{t.previousPage}</button>
+                <button type="button" onClick={() => changeMushafPage(mushafPage + 1)} disabled={mushafPage >= 604} aria-label={t.nextPage} className="min-h-11 rounded-xl border border-[var(--border)] px-2 text-xs font-semibold text-[var(--accent)] disabled:opacity-40">{t.nextPage}</button>
+              </div>
+              <label className="mt-3 flex items-center justify-between gap-2 text-xs font-semibold text-[var(--muted)]">{t.mushafPage}<span className="flex items-center gap-1"><input type="number" min={1} max={604} value={mushafPage} onChange={(event) => changeMushafPage(Number(event.target.value))} className="h-11 w-20 rounded-xl border border-[var(--border)] bg-white px-2 text-center text-sm text-[var(--ink)]" /> / 604</span></label>
+              {hideForRecall && <div className="mt-3 grid gap-2 border-t border-[var(--border)] pt-3">
+                <button type="button" onClick={revealNextWord} disabled={hiddenWordCount === 0} aria-keyshortcuts="Space" className="min-h-12 rounded-xl bg-emerald-800 px-3 text-sm font-bold text-white shadow-sm hover:bg-emerald-900 disabled:cursor-not-allowed disabled:opacity-50">{t.showNextWord} <kbd className="ms-1 rounded-md border border-white/30 bg-white/15 px-1.5 py-0.5 text-xs font-semibold">Space</kbd></button>
+                <button type="button" onClick={() => { setHiddenWords([]); setRevealed(selectedAyahs.map((ayah) => ayah.numberInSurah)); }} disabled={hiddenWordCount === 0} className="min-h-10 rounded-xl px-2 text-xs font-semibold text-[var(--accent)] underline disabled:opacity-50">{t.showAllWords}</button>
+                <span className="text-center text-xs text-[var(--muted)]">{hiddenWordCount} {t.wordsHidden}</span>
+                <p className="text-center text-xs leading-5 text-[var(--muted)]">{t.revealKeyboardHint}</p>
+              </div>}
+            </section>
+          )}
           {(activeTab === "read" || activeTab === "memorize") && (
             <>
               <section className="rounded-2xl border border-[var(--border)] bg-white p-4 shadow-sm sm:p-5">
