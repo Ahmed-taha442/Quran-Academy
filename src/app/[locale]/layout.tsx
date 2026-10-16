@@ -47,6 +47,9 @@ export default async function LocaleLayout({ children, params }: Props) {
 
   return (
     <html lang={locale} dir={dir} className={`${bodyFont.variable} ${arabicFont.variable}`}>
+      <head>
+        <meta name="google" content="notranslate" />
+      </head>
       <body className="min-h-screen antialiased">
         <NextIntlClientProvider messages={messages}>
           <SiteHeader />
