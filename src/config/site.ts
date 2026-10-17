@@ -1,6 +1,6 @@
 export const siteConfig = {
-  name: "Accadmy",
-  nameAr: "أكاديمية القرآن والتأسيس العربي",
+  name: "NOON",
+  nameAr: "أكاديمية نون لتحفيظ القرآن",
   description:
     "Academy for teaching Quran reading and Arabic foundations to non-Arabic speakers.",
   defaultLocale: "en",

@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { Link } from "@/i18n/navigation";
@@ -13,8 +14,16 @@ export function SiteHeader() {
   return (
     <header className="sticky top-0 z-30 border-b border-[var(--border)] bg-[var(--bg)]/95 backdrop-blur">
       <div className="relative mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 py-3 sm:px-6 lg:px-8">
-        <Link href="/" className="shrink-0 font-arabic text-xl font-bold text-[var(--accent)]">
-          Accadmy
+        <Link href="/" className="inline-flex shrink-0 items-center rounded-lg" aria-label="NOON Quran Memorization Academy">
+          <Image
+            src="/brand/noon-logo-horizontal.png"
+            alt="NOON Quran Memorization Academy"
+            width={194}
+            height={64}
+            sizes="(max-width: 640px) 133px, (max-width: 1024px) 170px, 194px"
+            preload
+            className="h-11 w-auto sm:h-14 lg:h-16"
+          />
         </Link>
         <button
           type="button"

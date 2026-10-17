@@ -29,7 +29,7 @@ export function generateStaticParams() {
 }
 
 export const metadata: Metadata = {
-  title: "Accadmy | Quran & Arabic Foundation",
+  title: "NOON | Quran & Arabic Foundation",
   description:
     "Learn Arabic reading foundations and the Quran as a non-Arabic speaker.",
 };
