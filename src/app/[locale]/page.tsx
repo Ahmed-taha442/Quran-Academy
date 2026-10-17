@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { siteConfig } from "@/config/site";
@@ -25,7 +26,7 @@ export default async function HomePage({ params }: Props) {
 
   return (
     <div>
-      <section className="relative isolate mx-auto max-w-6xl overflow-hidden px-4 py-14 sm:px-6 sm:py-20 lg:px-8 lg:py-24">
+      <section className="relative isolate mx-auto max-w-6xl overflow-hidden px-4 py-8 sm:px-6 sm:py-20 lg:px-8 lg:py-24">
         <div aria-hidden="true" className="pointer-events-none absolute -end-20 -top-24 -z-10 size-72 rounded-full bg-emerald-100/70 blur-3xl sm:size-96" />
         <p className="mb-3 text-sm font-semibold tracking-wide text-[var(--gold)]">
           {t("eyebrow")}
@@ -35,6 +36,20 @@ export default async function HomePage({ params }: Props) {
         >
           {t("headline")}
         </h1>
+        <div role="group" aria-labelledby="home-contact-title" className="mt-4 max-w-3xl">
+          <h2 id="home-contact-title" className={"mb-3 text-sm font-semibold text-[var(--ink)] " + headingClass}>{contact.title}</h2>
+          <div className="grid gap-3 sm:grid-cols-2 sm:gap-4">
+            <a href="https://preply.in/AFAF9EN42595869112?ts=17921586" target="_blank" rel="noopener noreferrer" className="group flex min-h-20 min-w-0 items-center gap-3 rounded-2xl border border-[var(--border)] bg-white p-4 shadow-sm transition-colors hover:border-[var(--accent)] hover:shadow-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent)] sm:p-4">
+              <span aria-hidden="true" className="flex h-12 w-20 shrink-0 items-center justify-center rounded-xl border border-[var(--border)] bg-white px-2"><Image src="https://upload.wikimedia.org/wikipedia/commons/7/74/Preply_logo_%282023%29.svg" alt="" width={84} height={24} unoptimized className="h-auto w-full" /></span>
+              <span className="min-w-0"><span className="block font-semibold text-[var(--ink)] group-hover:text-[var(--accent)]">{contact.preply}</span></span>
+              <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="ms-auto size-5 shrink-0 text-[var(--muted)]"><path strokeLinecap="round" strokeLinejoin="round" d="M7 17 17 7M8 7h9v9"/></svg>
+            </a>
+            <a href="mailto:afafassem2000@gmail.com" className="group flex min-h-24 min-w-0 items-center gap-4 rounded-2xl border border-[var(--border)] bg-white p-4 shadow-sm transition-colors hover:border-[var(--accent)] hover:shadow-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent)] sm:p-5">
+              <span aria-hidden="true" className="flex size-12 shrink-0 items-center justify-center rounded-xl bg-emerald-100 text-[var(--accent)]"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="size-6"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path strokeLinecap="round" strokeLinejoin="round" d="m4 7 8 6 8-6"/></svg></span>
+              <span className="min-w-0"><span className="block font-semibold text-[var(--ink)] group-hover:text-[var(--accent)]">{contact.email}</span><span dir="ltr" className="mt-1 block break-all text-left text-sm text-[var(--muted)]">afafassem2000@gmail.com</span></span>
+            </a>
+          </div>
+        </div>
         <p className="mt-5 max-w-2xl text-base leading-8 text-[var(--muted)] sm:text-lg">{t("sub")}</p>
         <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
           <a
@@ -108,22 +123,6 @@ export default async function HomePage({ params }: Props) {
         </div>
       </section>
 
-      <section className="border-t border-[var(--border)] bg-white" aria-labelledby="home-contact-title">
-        <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6 sm:py-16 lg:px-8">
-          <h2 id="home-contact-title" className={"text-2xl font-semibold tracking-tight sm:text-3xl " + headingClass}>{contact.title}</h2>
-          <div className="mt-6 grid gap-3 sm:grid-cols-2 sm:gap-4">
-            <a href="https://preply.in/AFAF9EN42595869112?ts=17921586" target="_blank" rel="noopener noreferrer" className="group flex min-h-24 min-w-0 items-center gap-4 rounded-2xl border border-[var(--border)] bg-[var(--surface-soft)]/60 p-4 transition-colors hover:border-[var(--accent)] hover:bg-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent)] sm:p-5">
-              <span aria-hidden="true" className="flex size-12 shrink-0 items-center justify-center rounded-xl bg-[var(--accent)] text-white"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="size-6"><rect x="3.5" y="5" width="17" height="16" rx="2.5"/><path strokeLinecap="round" d="M7.5 3.5v3M16.5 3.5v3M3.5 9.5h17M8 14h3m2 0h3M8 17h3"/></svg></span>
-              <span className="min-w-0"><span className="block font-semibold text-[var(--ink)] group-hover:text-[var(--accent)]">{contact.preply}</span><span className="mt-1 block text-sm text-[var(--muted)]">Preply</span></span>
-              <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="ms-auto size-5 shrink-0 text-[var(--muted)]"><path strokeLinecap="round" strokeLinejoin="round" d="M7 17 17 7M8 7h9v9"/></svg>
-            </a>
-            <a href="mailto:afafassem2000@gmail.com" className="group flex min-h-24 min-w-0 items-center gap-4 rounded-2xl border border-[var(--border)] bg-[var(--surface-soft)]/60 p-4 transition-colors hover:border-[var(--accent)] hover:bg-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent)] sm:p-5">
-              <span aria-hidden="true" className="flex size-12 shrink-0 items-center justify-center rounded-xl bg-emerald-100 text-[var(--accent)]"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="size-6"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path strokeLinecap="round" strokeLinejoin="round" d="m4 7 8 6 8-6"/></svg></span>
-              <span className="min-w-0"><span className="block font-semibold text-[var(--ink)] group-hover:text-[var(--accent)]">{contact.email}</span><span dir="ltr" className="mt-1 block break-all text-left text-sm text-[var(--muted)]">afafassem2000@gmail.com</span></span>
-            </a>
-          </div>
-        </div>
-      </section>
     </div>
   );
 }
