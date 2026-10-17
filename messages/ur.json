@@ -67,12 +67,9 @@
   },
   "arabicFoundation": {
     "title": "عربی کی بنیادیں",
-    "intro": "سرگرمیوں اور مواد کے لیے ایک یونٹ منتخب کریں۔",
-    "openWordwall": "Wordwall فولڈر کھولیں",
-    "wordwallNote": "Wordwall سرگرمیوں کا فولڈر نئے ٹیب میں کھلے گا۔",
-    "openDrive": "Google Drive فائل کھولیں",
-    "driveNote": "تعلیمی مواد Google Drive میں نئے ٹیب پر کھلے گا۔",
-    "tabs": {
+    "eyebrow": "عربی پڑھنے کا راستہ · ۷ اسباق",
+    "unitListLabel": "عربی بنیاد کے اسباق",
+    "units": {
       "letters": "عربی حروف",
       "shortVowels": "مختصر حرکات",
       "longVowels": "مد",
@@ -80,19 +77,6 @@
       "sukoon": "سکون",
       "shadda": "شدہ",
       "noorBayan": "نور البیان"
-    },
-    "descriptions": {
-      "letters": "عربی حروف پہچانیں اور مشق کریں۔",
-      "shortVowels": "زبر، زیر اور پیش کی مشق کریں۔",
-      "longVowels": "مد کے تین حروف سیکھیں۔",
-      "tanween": "تنوین کی تین صورتوں کی مشق کریں۔",
-      "sukoon": "ساکن حروف پڑھنا سیکھیں۔",
-      "shadda": "شدہ اور دوہرے حرف کی مشق کریں۔",
-      "noorBayan": "نور البیان کا تعلیمی مواد کھولیں۔"
-    },
-    "tablist": "عربی بنیاد کے اسباق",
-    "wordwall": "Wordwall",
-    "drive": "Google Drive",
-    "eyebrow": "عربی پڑھنے کا راستہ · ۷ اسباق"
+    }
   }
 }

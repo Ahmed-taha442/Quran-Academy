@@ -67,12 +67,9 @@
   },
   "arabicFoundation": {
     "title": "Fondations de l’arabe",
-    "intro": "Choisissez une unité pour accéder à ses activités et ressources.",
-    "openWordwall": "Ouvrir le dossier Wordwall",
-    "wordwallNote": "Ouvre le dossier d’activités Wordwall dans un nouvel onglet.",
-    "openDrive": "Ouvrir le fichier Drive",
-    "driveNote": "Ouvre le support pédagogique sur Google Drive dans un nouvel onglet.",
-    "tabs": {
+    "eyebrow": "Parcours de lecture arabe · 7 unités",
+    "unitListLabel": "Unités des fondations de l’arabe",
+    "units": {
       "letters": "Lettres arabes",
       "shortVowels": "Voyelles brèves",
       "longVowels": "Voyelles longues",
@@ -80,19 +77,6 @@
       "sukoon": "Soukoun",
       "shadda": "Chadda",
       "noorBayan": "Nour Al-Bayan"
-    },
-    "descriptions": {
-      "letters": "Reconnaître et pratiquer l’alphabet arabe.",
-      "shortVowels": "Pratiquer la fatḥa, la kasra et la ḍamma.",
-      "longVowels": "Découvrir les trois lettres de prolongation.",
-      "tanween": "Pratiquer les trois formes du tanwin.",
-      "sukoon": "Lire les lettres avec soukoun.",
-      "shadda": "Pratiquer la chadda et les consonnes doublées.",
-      "noorBayan": "Ouvrir le support pédagogique Nour Al-Bayan."
-    },
-    "tablist": "Unités des fondations de l’arabe",
-    "wordwall": "Wordwall",
-    "drive": "Google Drive",
-    "eyebrow": "Parcours de lecture arabe · 7 unités"
+    }
   }
 }

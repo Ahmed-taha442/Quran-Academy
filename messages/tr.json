@@ -67,12 +67,9 @@
   },
   "arabicFoundation": {
     "title": "Arapça Temelleri",
-    "intro": "Etkinliklerine ve kaynaklarına ulaşmak için bir ünite seçin.",
-    "openWordwall": "Wordwall klasörünü aç",
-    "wordwallNote": "Wordwall etkinlik klasörünü yeni sekmede açar.",
-    "openDrive": "Google Drive dosyasını aç",
-    "driveNote": "Eğitim materyalini Google Drive’da yeni sekmede açar.",
-    "tabs": {
+    "eyebrow": "Arapça okuma yolu · 7 ünite",
+    "unitListLabel": "Arapça Temelleri üniteleri",
+    "units": {
       "letters": "Arapça harfler",
       "shortVowels": "Kısa ünlüler",
       "longVowels": "Uzun ünlüler",
@@ -80,19 +77,6 @@
       "sukoon": "Sükun",
       "shadda": "Şedde",
       "noorBayan": "Nurul Beyan"
-    },
-    "descriptions": {
-      "letters": "Arap alfabesini tanıyın ve alıştırma yapın.",
-      "shortVowels": "Fetha, kesra ve damme alıştırması yapın.",
-      "longVowels": "Üç med harfini öğrenin.",
-      "tanween": "Tenvinin üç biçimini çalışın.",
-      "sukoon": "Sükunlu harfleri okumayı öğrenin.",
-      "shadda": "Şedde ve ikiz ünsüzleri çalışın.",
-      "noorBayan": "Nurul Beyan eğitim materyalini açın."
-    },
-    "tablist": "Arapça Temelleri üniteleri",
-    "wordwall": "Wordwall",
-    "drive": "Google Drive",
-    "eyebrow": "Arapça okuma yolu · 7 ünite"
+    }
   }
 }

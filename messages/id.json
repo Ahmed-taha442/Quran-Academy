@@ -67,12 +67,9 @@
   },
   "arabicFoundation": {
     "title": "Dasar Bahasa Arab",
-    "intro": "Pilih unit untuk membuka aktivitas dan materi belajarnya.",
-    "openWordwall": "Buka folder Wordwall",
-    "wordwallNote": "Membuka folder aktivitas Wordwall di tab baru.",
-    "openDrive": "Buka file Google Drive",
-    "driveNote": "Membuka materi pembelajaran di Google Drive di tab baru.",
-    "tabs": {
+    "eyebrow": "Jalur membaca bahasa Arab · 7 unit",
+    "unitListLabel": "Unit Dasar Bahasa Arab",
+    "units": {
       "letters": "Huruf Arab",
       "shortVowels": "Harakat pendek",
       "longVowels": "Mad panjang",
@@ -80,19 +77,6 @@
       "sukoon": "Sukun",
       "shadda": "Tasydid",
       "noorBayan": "Noor Al-Bayan"
-    },
-    "descriptions": {
-      "letters": "Kenali dan latih alfabet Arab.",
-      "shortVowels": "Latih fathah, kasrah, dan dammah.",
-      "longVowels": "Pelajari tiga huruf mad.",
-      "tanween": "Latih tiga bentuk tanwin.",
-      "sukoon": "Belajar membaca huruf bersukun.",
-      "shadda": "Latih tasydid dan konsonan ganda.",
-      "noorBayan": "Buka materi pembelajaran Noor Al-Bayan."
-    },
-    "tablist": "Unit Dasar Bahasa Arab",
-    "wordwall": "Wordwall",
-    "drive": "Google Drive",
-    "eyebrow": "Jalur membaca bahasa Arab · 7 unit"
+    }
   }
 }

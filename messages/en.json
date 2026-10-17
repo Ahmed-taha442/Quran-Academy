@@ -67,12 +67,9 @@
   },
   "arabicFoundation": {
     "title": "Arabic Foundation",
-    "intro": "Choose a unit to open its learning activities and resources.",
-    "openWordwall": "Open Wordwall folder",
-    "wordwallNote": "Opens the activity folder on Wordwall in a new tab.",
-    "openDrive": "Open Google Drive file",
-    "driveNote": "Opens the learning material on Google Drive in a new tab.",
-    "tabs": {
+    "eyebrow": "Arabic literacy path · 7 units",
+    "unitListLabel": "Arabic Foundation units",
+    "units": {
       "letters": "Arabic letters",
       "shortVowels": "Short vowels",
       "longVowels": "Long vowels",
@@ -80,19 +77,6 @@
       "sukoon": "Sukoon",
       "shadda": "Shadda",
       "noorBayan": "Noor Al-Bayan"
-    },
-    "descriptions": {
-      "letters": "Recognize and practise the Arabic alphabet.",
-      "shortVowels": "Practise fatḥah, kasrah, and ḍammah.",
-      "longVowels": "Learn the three long-vowel letters.",
-      "tanween": "Practise the three tanween forms.",
-      "sukoon": "Learn to read letters with sukoon.",
-      "shadda": "Practise shadda and doubled consonants.",
-      "noorBayan": "Open the Noor Al-Bayan learning material."
-    },
-    "tablist": "Arabic Foundation units",
-    "wordwall": "Wordwall",
-    "drive": "Google Drive",
-    "eyebrow": "Arabic literacy path · 7 units"
+    }
   }
 }
