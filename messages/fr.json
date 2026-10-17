@@ -1,16 +1,16 @@
 {
   "meta": {
-    "title": "Académie du Coran et Noor Al-Bayan",
-    "description": "Apprendre à lire le Coran avec Noor Al-Bayan, pour les non-arabophones."
+    "title": "Académie du Coran et des fondations de l’arabe",
+    "description": "Apprenez les bases de la lecture arabe et du Coran pour non-arabophones."
   },
   "nav": {
     "programs": "Programmes",
     "quran": "Coran",
-    "noorBayan": "Noor Al-Bayan",
     "login": "Connexion",
     "student": "Élève",
     "teacher": "Enseignant",
-    "trial": "Cours d'essai"
+    "trial": "Cours d'essai",
+    "arabicFoundation": "Fondations de l’arabe"
   },
   "home": {
     "eyebrow": "Enseignante certifiée du Coran",
@@ -27,11 +27,11 @@
     "intro": "Vous êtes ici pour apprendre le Coran, et je suis là pour vous aider à atteindre votre objectif, in cha Allah.",
     "experience": "J'ai quatre ans d'expérience dans l'enseignement du Coran aux non-arabophones, avec différentes académies et des élèves d'âges et de parcours variés.",
     "credentials": "Alhamdulillah, je détiens une ijaza dans la récitation de l'imam 'Asim selon Hafs et Shu'bah, et une ijaza en Al-Jazariyyah, ainsi que deux diplômes spécialisés de formation des enseignantes du Coran.",
-    "classes": "Dans mes cours : lecture et mémorisation du Coran, Noor Al-Bayan, tajwid de base et avancé, arabe coranique et études islamiques, in cha Allah.",
+    "classes": "Dans mes cours, vous pouvez apprendre la lecture et la mémorisation du Coran, les bases de l’arabe, le tajwid, l’arabe coranique et les études islamiques, si Dieu le veut.",
     "goal": "Mon objectif est de rendre l'apprentissage du Coran facile, confortable et adapté au niveau de chaque élève.",
     "offerTitle": "Ce que vous pouvez apprendre",
     "offer1": "Lecture et mémorisation du Coran",
-    "offer2": "Cours fondation Noor Al-Bayan",
+    "offer2": "Programme de bases de l’arabe",
     "offer3": "Tajwid de base et avancé",
     "offer4": "Arabe coranique",
     "offer5": "Études islamiques",
@@ -41,47 +41,16 @@
   },
   "programs": {
     "title": "Parcours d'apprentissage",
-    "noorTitle": "Noor Al-Bayan",
-    "noorBody": "Lettres, formes, voyelles et lecture liée jusqu'à ouvrir le Mushaf.",
     "quranTitle": "Saint Coran",
-    "quranBody": "Récitation correcte, bases du tajwid, fluidité, mémorisation et révision."
+    "quranBody": "Récitation correcte, bases du tajwid, fluidité, mémorisation et révision.",
+    "foundationTitle": "Fondations de l’arabe",
+    "foundationBody": "Apprenez progressivement les lettres, voyelles brèves, voyelles longues, tanwin, soukoun et chadda."
   },
   "noorBayan": {
     "title": "Noor Al-Bayan",
     "isolatedLetters": "Lettres isolées",
     "letterForms": "Formes des lettres",
-    "harakat": "Voyelles brèves",
-    "isolatedLesson": {
-      "title": "Lettres isolées",
-      "intro": "Découvrez la forme et le nom de chaque lettre, puis entraînez-vous à compter ses points.",
-      "study": "Découvrir les lettres",
-      "review": "Réviser les points",
-      "letter": "Lettre",
-      "letterAlt": "Lettre arabe",
-      "back": "Retour à Nour Al-Bayan",
-      "next": "Suivant",
-      "previous": "Précédent",
-      "progress": "Progression",
-      "shape": "À quoi ressemble-t-elle ?",
-      "guide": "Guide de prononciation",
-      "tip": "La prononciation est indiquée uniquement par écrit. Aucun son n’est diffusé.",
-      "alifShape": "Elle ressemble au chiffre 1.",
-      "alifGuide": "Proche du son A dans Apple.",
-      "baShape": "Elle ressemble à une assiette avec un point en dessous.",
-      "baGuide": "Proche du son B dans Ball.",
-      "taShape": "Elle ressemble à une assiette avec deux points au-dessus.",
-      "taGuide": "Proche du son T dans Ten.",
-      "thaShape": "Elle ressemble à une assiette avec trois points au-dessus.",
-      "thaGuide": "Proche du son Th dans Three.",
-      "dotCount": "Nombre de points",
-      "question": "Combien de points voyez-vous ?",
-      "check": "Vérifier",
-      "correct": "Bonne réponse !",
-      "incorrect": "Réessayez.",
-      "wordwall": "S’entraîner sur Wordwall",
-      "wordwallHint": "Une activité de révision supplémentaire sur ces quatre lettres s’ouvre sur Wordwall.",
-      "alifNote": "La hamza au-dessus de alif est un signe, pas un point de la lettre."
-    }
+    "harakat": "Voyelles brèves"
   },
   "quran": {
     "title": "Parcours Coran",
@@ -93,6 +62,37 @@
     "student": "Tableau de l'élève",
     "teacher": "Tableau de l'enseignant",
     "admin": "Tableau admin",
-    "continue": "Reprendre là où vous vous êtes arrêté"
+    "continue": "Reprendre là où vous vous êtes arrêté",
+    "arabicFoundation": "Fondations de l’arabe"
+  },
+  "arabicFoundation": {
+    "title": "Fondations de l’arabe",
+    "intro": "Choisissez une unité pour accéder à ses activités et ressources.",
+    "openWordwall": "Ouvrir le dossier Wordwall",
+    "wordwallNote": "Ouvre le dossier d’activités Wordwall dans un nouvel onglet.",
+    "openDrive": "Ouvrir le fichier Drive",
+    "driveNote": "Ouvre le support pédagogique sur Google Drive dans un nouvel onglet.",
+    "tabs": {
+      "letters": "Lettres arabes",
+      "shortVowels": "Voyelles brèves",
+      "longVowels": "Voyelles longues",
+      "tanween": "Tanwin",
+      "sukoon": "Soukoun",
+      "shadda": "Chadda",
+      "noorBayan": "Nour Al-Bayan"
+    },
+    "descriptions": {
+      "letters": "Reconnaître et pratiquer l’alphabet arabe.",
+      "shortVowels": "Pratiquer la fatḥa, la kasra et la ḍamma.",
+      "longVowels": "Découvrir les trois lettres de prolongation.",
+      "tanween": "Pratiquer les trois formes du tanwin.",
+      "sukoon": "Lire les lettres avec soukoun.",
+      "shadda": "Pratiquer la chadda et les consonnes doublées.",
+      "noorBayan": "Ouvrir le support pédagogique Nour Al-Bayan."
+    },
+    "tablist": "Unités des fondations de l’arabe",
+    "wordwall": "Wordwall",
+    "drive": "Google Drive",
+    "eyebrow": "Parcours de lecture arabe · 7 unités"
   }
 }

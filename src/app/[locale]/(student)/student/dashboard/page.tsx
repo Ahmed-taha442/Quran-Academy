@@ -16,7 +16,7 @@ export default async function StudentDashboardPage({ params }: Props) {
       <p className="mt-2 text-stone-700">{t("continue")}</p>
       <div className="mt-8 grid gap-4 md:grid-cols-2">
         <Link href="/learn/noor-bayan" className="rounded-xl border bg-white p-5">
-          Noor Al-Bayan
+          {t("arabicFoundation")}
         </Link>
         <Link href="/learn/quran" className="rounded-xl border bg-white p-5">
           Quran

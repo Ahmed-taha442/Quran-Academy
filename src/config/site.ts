@@ -1,8 +1,8 @@
 export const siteConfig = {
   name: "Accadmy",
-  nameAr: "أكاديمية القرآن ونور البيان",
+  nameAr: "أكاديمية القرآن والتأسيس العربي",
   description:
-    "Academy for teaching the Holy Quran and Noor Al-Bayan to non-Arabic speakers.",
+    "Academy for teaching Quran reading and Arabic foundations to non-Arabic speakers.",
   defaultLocale: "en",
   locales: ["en", "ar", "ur", "fr", "id", "tr"] as const,
   rtlLocales: ["ar", "ur"] as const,

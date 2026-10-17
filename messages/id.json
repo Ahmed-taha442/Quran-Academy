@@ -1,16 +1,16 @@
 {
   "meta": {
-    "title": "Akademi Quran & Noor Al-Bayan",
-    "description": "Belajar membaca Quran dengan Noor Al-Bayan untuk penutur non-Arab."
+    "title": "Akademi Al-Quran & Dasar Bahasa Arab",
+    "description": "Pelajari dasar membaca bahasa Arab dan Al-Quran untuk penutur non-Arab."
   },
   "nav": {
     "programs": "Program",
     "quran": "Quran",
-    "noorBayan": "Noor Al-Bayan",
     "login": "Masuk",
     "student": "Siswa",
     "teacher": "Guru",
-    "trial": "Kelas uji coba"
+    "trial": "Kelas uji coba",
+    "arabicFoundation": "Dasar Bahasa Arab"
   },
   "home": {
     "eyebrow": "Pengajar Quran bersertifikat",
@@ -27,11 +27,11 @@
     "intro": "Anda di sini karena ingin belajar Quran, dan saya siap membantu Anda mencapai tujuan itu, insyaAllah.",
     "experience": "Saya memiliki empat tahun pengalaman mengajar Quran kepada penutur non-Arab, di berbagai akademi dan dengan siswa dari usia serta latar belakang yang berbeda.",
     "credentials": "Alhamdulillah, saya memiliki ijazah bacaan Imam Asim melalui Hafs dan Syu'bah, ijazah Al-Jazariyyah, serta dua diploma pelatihan guru Quran.",
-    "classes": "Di kelas: bacaan dan hafalan Quran, Noor Al-Bayan, tajwid dasar dan lanjutan, bahasa Arab Quran, dan studi Islam, insyaAllah.",
+    "classes": "Di kelas saya, Anda dapat belajar membaca dan menghafal Al-Quran, dasar bahasa Arab, tajwid dasar dan lanjutan, bahasa Arab Al-Quran, dan studi Islam.",
     "goal": "Tujuan saya membuat belajar Quran mudah, nyaman, dan sesuai tingkat setiap siswa.",
     "offerTitle": "Yang bisa Anda pelajari",
     "offer1": "Bacaan dan hafalan Quran",
-    "offer2": "Kursus dasar Noor Al-Bayan",
+    "offer2": "Program Dasar Bahasa Arab",
     "offer3": "Tajwid dasar dan lanjutan",
     "offer4": "Bahasa Arab Quran",
     "offer5": "Studi Islam",
@@ -41,47 +41,16 @@
   },
   "programs": {
     "title": "Jalur belajar",
-    "noorTitle": "Noor Al-Bayan",
-    "noorBody": "Huruf, bentuk, harakat, dan bacaan bersambung hingga siswa bisa membuka Mushaf.",
     "quranTitle": "Al-Quran",
-    "quranBody": "Tilawah yang benar, dasar tajwid, kelancaran, hafalan, dan murajaah."
+    "quranBody": "Tilawah yang benar, dasar tajwid, kelancaran, hafalan, dan murajaah.",
+    "foundationTitle": "Dasar Bahasa Arab",
+    "foundationBody": "Pelajari huruf, harakat pendek, huruf mad, tanwin, sukun, dan tasydid secara bertahap."
   },
   "noorBayan": {
     "title": "Noor Al-Bayan",
     "isolatedLetters": "Huruf terpisah",
     "letterForms": "Bentuk huruf",
-    "harakat": "Harakat",
-    "isolatedLesson": {
-      "title": "Huruf terpisah",
-      "intro": "Kenali bentuk dan nama setiap huruf, lalu berlatih menghitung titiknya.",
-      "study": "Kenali huruf",
-      "review": "Ulangi titik",
-      "letter": "Huruf",
-      "letterAlt": "Huruf Arab",
-      "back": "Kembali ke Noor Al-Bayan",
-      "next": "Berikutnya",
-      "previous": "Sebelumnya",
-      "progress": "Progres pelajaran",
-      "shape": "Seperti apa bentuknya?",
-      "guide": "Panduan pelafalan",
-      "tip": "Pelafalan hanya ditampilkan sebagai teks. Tidak ada audio yang diputar.",
-      "alifShape": "Bentuknya seperti angka 1.",
-      "alifGuide": "Mirip bunyi A pada Apple.",
-      "baShape": "Bentuknya seperti piring dengan satu titik di bawah.",
-      "baGuide": "Mirip bunyi B pada Ball.",
-      "taShape": "Bentuknya seperti piring dengan dua titik di atas.",
-      "taGuide": "Mirip bunyi T pada Ten.",
-      "thaShape": "Bentuknya seperti piring dengan tiga titik di atas.",
-      "thaGuide": "Mirip bunyi Th pada Three.",
-      "dotCount": "Jumlah titik",
-      "question": "Berapa titik yang kamu lihat?",
-      "check": "Periksa",
-      "correct": "Benar!",
-      "incorrect": "Coba lagi.",
-      "wordwall": "Berlatih di Wordwall",
-      "wordwallHint": "Aktivitas ulasan tambahan untuk empat huruf ini dibuka di Wordwall.",
-      "alifNote": "Hamzah di atas alif adalah tanda, bukan titik huruf."
-    }
+    "harakat": "Harakat"
   },
   "quran": {
     "title": "Jalur Quran",
@@ -93,6 +62,37 @@
     "student": "Dasbor siswa",
     "teacher": "Dasbor guru",
     "admin": "Dasbor admin",
-    "continue": "Lanjutkan dari terakhir kali"
+    "continue": "Lanjutkan dari terakhir kali",
+    "arabicFoundation": "Dasar Bahasa Arab"
+  },
+  "arabicFoundation": {
+    "title": "Dasar Bahasa Arab",
+    "intro": "Pilih unit untuk membuka aktivitas dan materi belajarnya.",
+    "openWordwall": "Buka folder Wordwall",
+    "wordwallNote": "Membuka folder aktivitas Wordwall di tab baru.",
+    "openDrive": "Buka file Google Drive",
+    "driveNote": "Membuka materi pembelajaran di Google Drive di tab baru.",
+    "tabs": {
+      "letters": "Huruf Arab",
+      "shortVowels": "Harakat pendek",
+      "longVowels": "Mad panjang",
+      "tanween": "Tanwin",
+      "sukoon": "Sukun",
+      "shadda": "Tasydid",
+      "noorBayan": "Noor Al-Bayan"
+    },
+    "descriptions": {
+      "letters": "Kenali dan latih alfabet Arab.",
+      "shortVowels": "Latih fathah, kasrah, dan dammah.",
+      "longVowels": "Pelajari tiga huruf mad.",
+      "tanween": "Latih tiga bentuk tanwin.",
+      "sukoon": "Belajar membaca huruf bersukun.",
+      "shadda": "Latih tasydid dan konsonan ganda.",
+      "noorBayan": "Buka materi pembelajaran Noor Al-Bayan."
+    },
+    "tablist": "Unit Dasar Bahasa Arab",
+    "wordwall": "Wordwall",
+    "drive": "Google Drive",
+    "eyebrow": "Jalur membaca bahasa Arab · 7 unit"
   }
 }

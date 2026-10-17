@@ -31,7 +31,7 @@ export function SiteHeader() {
           className={`${menuOpen ? "flex" : "hidden"} absolute inset-x-3 top-[calc(100%+0.5rem)] flex-col items-stretch gap-1 rounded-2xl border border-[var(--border)] bg-white p-3 text-sm shadow-xl md:static md:flex md:flex-row md:items-center md:justify-end md:gap-2 md:border-0 md:bg-transparent md:p-0 md:shadow-none`}
         >
           <Link onClick={() => setMenuOpen(false)} className="rounded-xl px-3 py-2.5 hover:bg-[var(--surface-soft)] md:py-2" href="/programs">{t("programs")}</Link>
-          <Link onClick={() => setMenuOpen(false)} className="rounded-xl px-3 py-2.5 hover:bg-[var(--surface-soft)] md:py-2" href="/learn/noor-bayan">{t("noorBayan")}</Link>
+          <Link onClick={() => setMenuOpen(false)} className="rounded-xl px-3 py-2.5 hover:bg-[var(--surface-soft)] md:py-2" href="/learn/noor-bayan">{t("arabicFoundation")}</Link>
           <Link onClick={() => setMenuOpen(false)} className="rounded-xl px-3 py-2.5 hover:bg-[var(--surface-soft)] md:py-2" href="/learn/quran">{t("quran")}</Link>
           <div className="my-1 md:my-0"><LocaleSwitcher /></div>
           <a

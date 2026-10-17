@@ -1,16 +1,16 @@
 {
   "meta": {
-    "title": "Kur'an ve Nurul Beyan Akademisi",
-    "description": "Arapça konuşmayanlar için Nurul Beyan ile Kur'an okumayı öğrenin."
+    "title": "Kuran ve Arapça Temelleri Akademisi",
+    "description": "Arapça konuşmayanlar için Arapça okuma temellerini ve Kur’an okumayı öğrenin."
   },
   "nav": {
     "programs": "Programlar",
     "quran": "Kur'an",
-    "noorBayan": "Nurul Beyan",
     "login": "Giriş",
     "student": "Öğrenci",
     "teacher": "Öğretmen",
-    "trial": "Deneme dersi"
+    "trial": "Deneme dersi",
+    "arabicFoundation": "Arapça Temelleri"
   },
   "home": {
     "eyebrow": "Sertifikalı Kur'an hocası",
@@ -27,11 +27,11 @@
     "intro": "Kur'an öğrenmek istediğiniz için buradasınız; hedefinizde size yardımcı olmak için buradayım, inşaAllah.",
     "experience": "Arapça konuşmayanlara Kur'an öğretiminde dört yıllık deneyimim var; farklı akademilerde ve çeşitli yaşlardan öğrencilerle çalıştım.",
     "credentials": "Elhamdülillah, İmam Asım kıraatinde Hafs ve Şu'be tarikiyle icazetim, El-Cezariyye icazetim ve Kur'an öğretmenliği diplomalarım vardır.",
-    "classes": "Derslerimde Kur'an okuma ve ezber, Nurul Beyan, temel ve ileri tecvid, Kur'an Arapçası ve İslamî ilimler, inşaAllah.",
+    "classes": "Derslerimde Kur’an okumayı ve ezberlemeyi, Arapça temellerini, temel ve ileri tecvidi, Kur’an Arapçasını ve İslami ilimleri öğrenebilirsiniz.",
     "goal": "Amacım Kur'an öğrenimini her öğrencinin seviyesine uygun, kolay ve rahat kılmaktır.",
     "offerTitle": "Neler öğrenebilirsiniz",
     "offer1": "Kur'an okuma ve ezber",
-    "offer2": "Nurul Beyan temel kursu",
+    "offer2": "Arapça Temelleri programı",
     "offer3": "Temel ve ileri tecvid",
     "offer4": "Kur'an Arapçası",
     "offer5": "İslamî ilimler",
@@ -41,47 +41,16 @@
   },
   "programs": {
     "title": "Öğrenme yolu",
-    "noorTitle": "Nurul Beyan",
-    "noorBody": "Harfler, şekiller, harekeler ve bitişik okuma; öğrenci Mushaf'ı açabilene kadar.",
     "quranTitle": "Kur'an-ı Kerim",
-    "quranBody": "Doğru tilavet, tecvid temelleri, akıcılık, ezber ve tekrar."
+    "quranBody": "Doğru tilavet, tecvid temelleri, akıcılık, ezber ve tekrar.",
+    "foundationTitle": "Arapça Temelleri",
+    "foundationBody": "Arapça harfleri, kısa ünlüleri, uzun ünlüleri, tenvini, sükunu ve şeddeyi adım adım öğrenin."
   },
   "noorBayan": {
     "title": "Nurul Beyan",
     "isolatedLetters": "Ayrı harfler",
     "letterForms": "Harf şekilleri",
-    "harakat": "Harekeler",
-    "isolatedLesson": {
-      "title": "Ayrı harfler",
-      "intro": "Her harfin şeklini ve adını tanıyın, ardından noktalarını sayma alıştırması yapın.",
-      "study": "Harfleri tanıyalım",
-      "review": "Noktaları tekrar et",
-      "letter": "Harf",
-      "letterAlt": "Arap harfi",
-      "back": "Nurul Beyan’a dön",
-      "next": "Sonraki",
-      "previous": "Önceki",
-      "progress": "Ders ilerlemesi",
-      "shape": "Neye benziyor?",
-      "guide": "Telaffuz kılavuzu",
-      "tip": "Telaffuz yalnızca metin olarak gösterilir. Ses oynatılmaz.",
-      "alifShape": "1 rakamına benzer.",
-      "alifGuide": "Apple kelimesindeki A sesine benzer.",
-      "baShape": "Altında bir nokta olan tabağa benzer.",
-      "baGuide": "Ball kelimesindeki B sesine benzer.",
-      "taShape": "Üzerinde iki nokta olan tabağa benzer.",
-      "taGuide": "Ten kelimesindeki T sesine benzer.",
-      "thaShape": "Üzerinde üç nokta olan tabağa benzer.",
-      "thaGuide": "Three kelimesindeki Th sesine benzer.",
-      "dotCount": "Nokta sayısı",
-      "question": "Kaç nokta görüyorsun?",
-      "check": "Kontrol et",
-      "correct": "Doğru!",
-      "incorrect": "Tekrar deneyin.",
-      "wordwall": "Wordwall’da pratik yap",
-      "wordwallHint": "Bu dört harf için ek tekrar etkinliği Wordwall’da açılır.",
-      "alifNote": "Elifin üzerindeki hemze bir işarettir, harfin noktası değildir."
-    }
+    "harakat": "Harekeler"
   },
   "quran": {
     "title": "Kur'an yolu",
@@ -93,6 +62,37 @@
     "student": "Öğrenci paneli",
     "teacher": "Öğretmen paneli",
     "admin": "Yönetim paneli",
-    "continue": "Kaldığınız yerden devam edin"
+    "continue": "Kaldığınız yerden devam edin",
+    "arabicFoundation": "Arapça Temelleri"
+  },
+  "arabicFoundation": {
+    "title": "Arapça Temelleri",
+    "intro": "Etkinliklerine ve kaynaklarına ulaşmak için bir ünite seçin.",
+    "openWordwall": "Wordwall klasörünü aç",
+    "wordwallNote": "Wordwall etkinlik klasörünü yeni sekmede açar.",
+    "openDrive": "Google Drive dosyasını aç",
+    "driveNote": "Eğitim materyalini Google Drive’da yeni sekmede açar.",
+    "tabs": {
+      "letters": "Arapça harfler",
+      "shortVowels": "Kısa ünlüler",
+      "longVowels": "Uzun ünlüler",
+      "tanween": "Tenvin",
+      "sukoon": "Sükun",
+      "shadda": "Şedde",
+      "noorBayan": "Nurul Beyan"
+    },
+    "descriptions": {
+      "letters": "Arap alfabesini tanıyın ve alıştırma yapın.",
+      "shortVowels": "Fetha, kesra ve damme alıştırması yapın.",
+      "longVowels": "Üç med harfini öğrenin.",
+      "tanween": "Tenvinin üç biçimini çalışın.",
+      "sukoon": "Sükunlu harfleri okumayı öğrenin.",
+      "shadda": "Şedde ve ikiz ünsüzleri çalışın.",
+      "noorBayan": "Nurul Beyan eğitim materyalini açın."
+    },
+    "tablist": "Arapça Temelleri üniteleri",
+    "wordwall": "Wordwall",
+    "drive": "Google Drive",
+    "eyebrow": "Arapça okuma yolu · 7 ünite"
   }
 }

@@ -29,9 +29,9 @@ export function generateStaticParams() {
 }
 
 export const metadata: Metadata = {
-  title: "Accadmy | Quran & Noor Al-Bayan",
+  title: "Accadmy | Quran & Arabic Foundation",
   description:
-    "Learn Quran reading and Noor Al-Bayan as a non-Arabic speaker.",
+    "Learn Arabic reading foundations and the Quran as a non-Arabic speaker.",
 };
 
 export default async function LocaleLayout({ children, params }: Props) {

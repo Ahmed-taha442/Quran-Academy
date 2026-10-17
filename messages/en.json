@@ -1,16 +1,16 @@
 {
   "meta": {
-    "title": "Quran & Noor Al-Bayan Academy",
-    "description": "Learn to read the Quran with Noor Al-Bayan, designed for non-Arabic speakers."
+    "title": "Quran & Arabic Foundation Academy",
+    "description": "Learn Arabic reading foundations and the Holy Quran for non-Arabic speakers."
   },
   "nav": {
     "programs": "Programs",
     "quran": "Quran",
-    "noorBayan": "Noor Al-Bayan",
     "login": "Log in",
     "student": "Student",
     "teacher": "Teacher",
-    "trial": "Free trial"
+    "trial": "Free trial",
+    "arabicFoundation": "Arabic Foundation"
   },
   "home": {
     "eyebrow": "Certified Quran tutor",
@@ -27,11 +27,11 @@
     "intro": "You’re here because you want to learn the Quran, and I’m here to help you achieve your goal, in sha’Allah.",
     "experience": "I have four years of experience teaching the Quran to non-Arabic speakers, and I’ve worked with different Quran academies and students of various ages and backgrounds.",
     "credentials": "Alhamdulillah, I hold an Ijaza in the recitation of Imam ‘Asim through both Hafs and Shu‘bah, and an Ijaza in Al-Jazariyyah. I’ve also completed two specialized diplomas in Quran teacher training, along with several courses in Tajweed and Islamic Studies.",
-    "classes": "In my classes, you can learn Quran reading and memorization, the Foundation Course with Noor Al-Bayan, Basic and Advanced Tajweed, Quranic Arabic, and Islamic Studies, in sha’Allah.",
+    "classes": "In my classes, you can learn Quran reading and memorization, Arabic Foundation, Basic and Advanced Tajweed, Quranic Arabic, and Islamic Studies, in sha’Allah.",
     "goal": "My goal is to make learning the Quran easy, comfortable, and suitable for each student’s level and needs. I’m passionate about helping my students overcome their difficulties and become more confident in their recitation.",
     "offerTitle": "What you can learn",
     "offer1": "Quran reading and memorization",
-    "offer2": "Foundation Course with Noor Al-Bayan",
+    "offer2": "Arabic Foundation program",
     "offer3": "Basic and Advanced Tajweed",
     "offer4": "Quranic Arabic",
     "offer5": "Islamic Studies",
@@ -41,47 +41,16 @@
   },
   "programs": {
     "title": "Learning path",
-    "noorTitle": "Noor Al-Bayan",
-    "noorBody": "Arabic letters, forms, vowels, and connected reading until the student can open the Mushaf.",
     "quranTitle": "Holy Quran",
-    "quranBody": "Correct recitation, tajweed foundations, fluency, memorization, and revision."
+    "quranBody": "Correct recitation, tajweed foundations, fluency, memorization, and revision.",
+    "foundationTitle": "Arabic Foundation",
+    "foundationBody": "Build Arabic reading skills step by step: letters, short vowels, long vowels, tanween, sukoon, and shadda."
   },
   "noorBayan": {
     "title": "Noor Al-Bayan",
     "isolatedLetters": "Isolated letters",
     "letterForms": "Letter forms",
-    "harakat": "Short vowels",
-    "isolatedLesson": {
-      "title": "Isolated letters",
-      "intro": "Explore each letter’s shape and name, then practise recognizing the number of dots.",
-      "study": "Meet the letters",
-      "review": "Review the dots",
-      "letter": "Letter",
-      "letterAlt": "Arabic letter",
-      "back": "Back to Noor Al-Bayan",
-      "next": "Next",
-      "previous": "Previous",
-      "progress": "Lesson progress",
-      "shape": "What does it look like?",
-      "guide": "Pronunciation guide",
-      "tip": "Pronunciation is shown as text only. No audio is played.",
-      "alifShape": "It looks like the number 1.",
-      "alifGuide": "Similar to the A sound in Apple.",
-      "baShape": "It looks like a plate with one dot below it.",
-      "baGuide": "Similar to the B sound in Ball.",
-      "taShape": "It looks like a plate with two dots above it.",
-      "taGuide": "Similar to the T sound in Ten.",
-      "thaShape": "It looks like a plate with three dots above it.",
-      "thaGuide": "Similar to the Th sound in Three.",
-      "dotCount": "Number of dots",
-      "question": "How many dots can you see?",
-      "check": "Check",
-      "correct": "Correct!",
-      "incorrect": "Try again.",
-      "wordwall": "Practise on Wordwall",
-      "wordwallHint": "An extra review activity for these four letters opens on Wordwall.",
-      "alifNote": "The hamza above alif is a sign, not a dot of the letter."
-    }
+    "harakat": "Short vowels"
   },
   "quran": {
     "title": "Quran track",
@@ -93,6 +62,37 @@
     "student": "Student dashboard",
     "teacher": "Teacher dashboard",
     "admin": "Admin dashboard",
-    "continue": "Continue from where you stopped"
+    "continue": "Continue from where you stopped",
+    "arabicFoundation": "Arabic Foundation"
+  },
+  "arabicFoundation": {
+    "title": "Arabic Foundation",
+    "intro": "Choose a unit to open its learning activities and resources.",
+    "openWordwall": "Open Wordwall folder",
+    "wordwallNote": "Opens the activity folder on Wordwall in a new tab.",
+    "openDrive": "Open Google Drive file",
+    "driveNote": "Opens the learning material on Google Drive in a new tab.",
+    "tabs": {
+      "letters": "Arabic letters",
+      "shortVowels": "Short vowels",
+      "longVowels": "Long vowels",
+      "tanween": "Tanween",
+      "sukoon": "Sukoon",
+      "shadda": "Shadda",
+      "noorBayan": "Noor Al-Bayan"
+    },
+    "descriptions": {
+      "letters": "Recognize and practise the Arabic alphabet.",
+      "shortVowels": "Practise fatḥah, kasrah, and ḍammah.",
+      "longVowels": "Learn the three long-vowel letters.",
+      "tanween": "Practise the three tanween forms.",
+      "sukoon": "Learn to read letters with sukoon.",
+      "shadda": "Practise shadda and doubled consonants.",
+      "noorBayan": "Open the Noor Al-Bayan learning material."
+    },
+    "tablist": "Arabic Foundation units",
+    "wordwall": "Wordwall",
+    "drive": "Google Drive",
+    "eyebrow": "Arabic literacy path · 7 units"
   }
 }

@@ -14,8 +14,8 @@ export default async function ProgramsPage({ params }: Props) {
     <section className="mx-auto grid max-w-6xl gap-6 px-4 py-12 md:grid-cols-2">
       <h1 className="md:col-span-2 text-3xl font-semibold">{t("title")}</h1>
       <Link href="/learn/noor-bayan" className="rounded-2xl border border-stone-300 bg-white p-6">
-        <h2 className="text-xl font-semibold">{t("noorTitle")}</h2>
-        <p className="mt-2 text-stone-700">{t("noorBody")}</p>
+        <h2 className="text-xl font-semibold">{t("foundationTitle")}</h2>
+        <p className="mt-2 text-stone-700">{t("foundationBody")}</p>
       </Link>
       <Link href="/learn/quran" className="rounded-2xl border border-stone-300 bg-white p-6">
         <h2 className="text-xl font-semibold">{t("quranTitle")}</h2>
