@@ -23,10 +23,10 @@ Open [http://localhost:3000](http://localhost:3000)
 
 - Authentication uses Better Auth with PostgreSQL via Prisma. New self-service accounts receive the `STUDENT` role; teacher, guardian, and admin roles must be assigned by a trusted administrator.
 - The Mushaf page requires an authenticated session. Unauthenticated visitors are sent to sign in and returned to the requested page afterward; the signed-in name is shown in the site header.
-- Copy `.env.example` to `.env.local`, generate a unique `BETTER_AUTH_SECRET` (`openssl rand -base64 32`), and set `DATABASE_URL` and `BETTER_AUTH_URL`.
+- Copy `.env.example` to `.env.local`, generate a unique `BETTER_AUTH_SECRET` (`openssl rand -base64 32`), and set `DATABASE_URL`, `DATABASE_URL_UNPOOLED`, and `BETTER_AUTH_URL`. For Neon, use the pooled connection string for `DATABASE_URL` (application traffic) and the direct, non-pooled string for `DATABASE_URL_UNPOOLED` (Prisma migrations); keep both secrets out of Git.
 - For Google login, create a Google OAuth web client and add `http://localhost:3000/api/auth/callback/google` as an authorized redirect URI. Set `GOOGLE_CLIENT_ID` and `GOOGLE_CLIENT_SECRET` on the server; never expose the secret with a `NEXT_PUBLIC_` prefix.
 - Production email/password accounts require email verification. Configure `RESEND_API_KEY` and `AUTH_EMAIL_FROM` for verification and password reset email delivery.
-- Apply the schema locally with `npm run db:migrate`, then generate the Prisma client with `npm run db:generate`. Deploy an existing migration with `npm run db:migrate:deploy`.
+- Prisma scripts load `.env.local` directly. Apply the schema in development with `npm run db:migrate`, then generate the Prisma client with `npm run db:generate`. Deploy existing migrations with `npm run db:migrate:deploy`; use Neon's direct connection for migrations.
 - Do not commit `.env.local` or real OAuth, database, auth, or email secrets.
 
 ## Folder map

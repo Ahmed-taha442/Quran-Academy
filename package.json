@@ -8,12 +8,14 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint .",
-    "db:generate": "prisma generate",
-    "db:migrate": "prisma migrate dev",
-    "db:migrate:deploy": "prisma migrate deploy"
+    "db:generate": "node --env-file=.env.local ./node_modules/prisma/build/index.js generate",
+    "db:migrate": "node --env-file=.env.local ./node_modules/prisma/build/index.js migrate dev",
+    "db:migrate:deploy": "node --env-file=.env.local ./node_modules/prisma/build/index.js migrate deploy"
   },
   "dependencies": {
     "@better-auth/prisma-adapter": "^1.7.11",
+    "@neon/config": "^1.9.2",
+    "@neon/env": "^1.6.3",
     "@prisma/client": "^6.19.3",
     "better-auth": "^1.7.11",
     "next": "^16.1.0",
