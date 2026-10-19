@@ -1,4 +1,5 @@
 import { setRequestLocale } from "next-intl/server";
+import { requireRole } from "@/lib/authorization";
 
 type Props = {
   params: Promise<{ locale: string }>;
@@ -6,6 +7,7 @@ type Props = {
 
 export default async function ProgressPage({ params }: Props) {
   const { locale } = await params;
+  await requireRole(locale, ["STUDENT"]);
   setRequestLocale(locale);
 
   return (

@@ -19,6 +19,15 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000)
 
+## Authentication and database
+
+- Authentication uses Better Auth with PostgreSQL via Prisma. New self-service accounts receive the `STUDENT` role; teacher, guardian, and admin roles must be assigned by a trusted administrator.
+- Copy `.env.example` to `.env.local`, generate a unique `BETTER_AUTH_SECRET` (`openssl rand -base64 32`), and set `DATABASE_URL` and `BETTER_AUTH_URL`.
+- For Google login, create a Google OAuth web client and add `http://localhost:3000/api/auth/callback/google` as an authorized redirect URI. Set `GOOGLE_CLIENT_ID` and `GOOGLE_CLIENT_SECRET` on the server; never expose the secret with a `NEXT_PUBLIC_` prefix.
+- Production email/password accounts require email verification. Configure `RESEND_API_KEY` and `AUTH_EMAIL_FROM` for verification and password reset email delivery.
+- Apply the schema locally with `npm run db:migrate`, then generate the Prisma client with `npm run db:generate`. Deploy an existing migration with `npm run db:migrate:deploy`.
+- Do not commit `.env.local` or real OAuth, database, auth, or email secrets.
+
 ## Folder map
 
 ```text

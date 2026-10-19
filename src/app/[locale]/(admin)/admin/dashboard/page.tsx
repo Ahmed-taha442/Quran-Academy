@@ -1,4 +1,5 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
+import { requireRole } from "@/lib/authorization";
 
 type Props = {
   params: Promise<{ locale: string }>;
@@ -6,6 +7,7 @@ type Props = {
 
 export default async function AdminDashboardPage({ params }: Props) {
   const { locale } = await params;
+  await requireRole(locale, ["ADMIN"]);
   setRequestLocale(locale);
   const t = await getTranslations("dashboard");
 

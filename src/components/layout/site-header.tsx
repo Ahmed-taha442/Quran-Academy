@@ -2,14 +2,33 @@
 
 import Image from "next/image";
 import { useTranslations } from "next-intl";
+import { useLocale } from "next-intl";
 import { useState } from "react";
-import { Link } from "@/i18n/navigation";
+import { Link, useRouter } from "@/i18n/navigation";
 import { siteConfig } from "@/config/site";
 import { LocaleSwitcher } from "@/components/layout/locale-switcher";
+import { authClient } from "@/lib/auth-client";
 
 export function SiteHeader() {
   const t = useTranslations("nav");
+  const locale = useLocale();
+  const router = useRouter();
+  const { data: session } = authClient.useSession();
   const [menuOpen, setMenuOpen] = useState(false);
+  const role = session
+    ? (session.user as typeof session.user & { role?: string }).role
+    : undefined;
+  const dashboardHref = role === "TEACHER"
+    ? "/teacher/dashboard"
+    : role === "ADMIN"
+      ? "/admin/dashboard"
+      : "/student/dashboard";
+
+  async function signOut() {
+    await authClient.signOut();
+    setMenuOpen(false);
+    router.push("/");
+  }
 
   return (
     <header className="sticky top-0 z-30 border-b border-[var(--border)] bg-[var(--bg)]/95 backdrop-blur">
@@ -51,9 +70,20 @@ export function SiteHeader() {
           >
             {t("trial")}
           </a>
-          <Link onClick={() => setMenuOpen(false)} href="/login" className="rounded-full border border-[var(--border)] px-4 py-2.5 text-center font-medium text-[var(--accent)] hover:bg-[var(--surface-soft)] md:py-2">
-            {t("login")}
-          </Link>
+          {session ? (
+            <>
+              <Link onClick={() => setMenuOpen(false)} href={dashboardHref} className="rounded-full border border-[var(--border)] px-4 py-2.5 text-center font-medium text-[var(--accent)] hover:bg-[var(--surface-soft)] md:py-2">
+                {locale === "ar" ? "لوحتي" : "Dashboard"}
+              </Link>
+              <button onClick={signOut} type="button" className="rounded-full border border-[var(--border)] px-4 py-2.5 text-center font-medium text-[var(--accent)] hover:bg-[var(--surface-soft)] md:py-2">
+                {locale === "ar" ? "تسجيل الخروج" : "Sign out"}
+              </button>
+            </>
+          ) : (
+            <Link onClick={() => setMenuOpen(false)} href="/login" className="rounded-full border border-[var(--border)] px-4 py-2.5 text-center font-medium text-[var(--accent)] hover:bg-[var(--surface-soft)] md:py-2">
+              {t("login")}
+            </Link>
+          )}
         </nav>
       </div>
     </header>
