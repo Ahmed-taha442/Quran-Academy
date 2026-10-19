@@ -72,6 +72,9 @@ export function SiteHeader() {
           </a>
           {session ? (
             <>
+              <span className="max-w-32 truncate px-2 text-sm font-medium text-[var(--ink)] sm:max-w-48" title={session.user.name}>
+                {session.user.name}
+              </span>
               <Link onClick={() => setMenuOpen(false)} href={dashboardHref} className="rounded-full border border-[var(--border)] px-4 py-2.5 text-center font-medium text-[var(--accent)] hover:bg-[var(--surface-soft)] md:py-2">
                 {locale === "ar" ? "لوحتي" : "Dashboard"}
               </Link>

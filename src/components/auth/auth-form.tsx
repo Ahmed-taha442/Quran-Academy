@@ -7,10 +7,11 @@ import { Link, useRouter } from "@/i18n/navigation";
 type Props = {
   locale: string;
   mode: "login" | "register";
+  returnTo: string;
   googleEnabled: boolean;
 };
 
-export function AuthForm({ locale, mode, googleEnabled }: Props) {
+export function AuthForm({ locale, mode, returnTo, googleEnabled }: Props) {
   const router = useRouter();
   const isArabic = locale === "ar";
   const isRegister = mode === "register";
@@ -46,14 +47,18 @@ export function AuthForm({ locale, mode, googleEnabled }: Props) {
     setPending(true);
     const email = String(formData.get("email") ?? "").trim().toLowerCase();
     const password = String(formData.get("password") ?? "");
-    const callbackURL = `/${locale}/student/dashboard`;
+    const callbackURL = returnTo;
 
     try {
       if (isRegister) {
         const name = String(formData.get("name") ?? "").trim();
         const result = await authClient.signUp.email({ name, email, password, callbackURL });
         if (result.error) throw new Error(result.error.message);
-        setError(copy.success);
+        if (result.data?.token) {
+          router.push(returnTo);
+        } else {
+          setError(copy.success);
+        }
       } else {
         const result = await authClient.signIn.email({ email, password, callbackURL });
         if (result.error) throw new Error(result.error.message);
@@ -79,7 +84,7 @@ export function AuthForm({ locale, mode, googleEnabled }: Props) {
     setPending(true);
     const result = await authClient.signIn.social({
       provider: "google",
-      callbackURL: `/${locale}/student/dashboard`,
+      callbackURL: returnTo,
     });
     if (result.error) {
       setError(copy.genericError);

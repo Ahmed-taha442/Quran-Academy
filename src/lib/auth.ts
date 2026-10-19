@@ -46,6 +46,7 @@ export const auth = betterAuth({
     enabled: true,
     minPasswordLength: 12,
     maxPasswordLength: 128,
+    autoSignIn: true,
     requireEmailVerification: process.env.NODE_ENV === "production",
     revokeSessionsOnPasswordReset: true,
     sendResetPassword: async ({ user, url }) => {
