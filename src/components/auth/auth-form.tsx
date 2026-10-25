@@ -16,6 +16,7 @@ export function AuthForm({ locale, mode, returnTo, googleEnabled }: Props) {
   const isArabic = locale === "ar";
   const isRegister = mode === "register";
   const [error, setError] = useState("");
+  const [registerHint, setRegisterHint] = useState(false);
   const [pending, setPending] = useState(false);
 
   const copy = isArabic
@@ -26,6 +27,8 @@ export function AuthForm({ locale, mode, returnTo, googleEnabled }: Props) {
         submit: isRegister ? "إنشاء حساب طالب" : "تسجيل الدخول",
         google: "المتابعة باستخدام Google",
         separator: "أو باستخدام البريد الإلكتروني",
+        loginCredentialsError: "البريد الإلكتروني أو كلمة المرور غير صحيحة. إذا لم يكن لديك حساب، سجّل أولًا.",
+        registerFirst: "إنشاء حساب جديد",
         genericError: "تعذر إكمال العملية. راجع البيانات وحاول مرة أخرى.",
         googleUnavailable: "تسجيل الدخول باستخدام Google غير مُعدّ بعد.",
       }
@@ -36,12 +39,15 @@ export function AuthForm({ locale, mode, returnTo, googleEnabled }: Props) {
         submit: isRegister ? "Create student account" : "Sign in",
         google: "Continue with Google",
         separator: "or continue with email",
+        loginCredentialsError: "Email or password is incorrect. If you don’t have an account, register first.",
+        registerFirst: "Create an account",
         genericError: "Could not complete the request. Check your details and try again.",
         googleUnavailable: "Google sign-in is not configured yet.",
       };
 
   async function handleSubmit(formData: FormData) {
     setError("");
+    setRegisterHint(false);
     setPending(true);
     const email = String(formData.get("email") ?? "").trim().toLowerCase();
     const password = String(formData.get("password") ?? "");
@@ -63,7 +69,15 @@ export function AuthForm({ locale, mode, returnTo, googleEnabled }: Props) {
         }
       } else {
         const result = await authClient.signIn.email({ email, password, callbackURL });
-        if (result.error) throw new Error(result.error.message);
+        if (result.error) {
+          if (result.error.code === "INVALID_EMAIL_OR_PASSWORD") {
+            setError(copy.loginCredentialsError);
+            setRegisterHint(true);
+          } else {
+            setError(copy.genericError);
+          }
+          return;
+        }
         const role = result.data
           ? (result.data.user as typeof result.data.user & { role?: string }).role
           : undefined;
@@ -83,6 +97,7 @@ export function AuthForm({ locale, mode, returnTo, googleEnabled }: Props) {
 
   async function signInWithGoogle() {
     setError("");
+    setRegisterHint(false);
     setPending(true);
     const result = await authClient.signIn.social({
       provider: "google",
@@ -124,7 +139,16 @@ export function AuthForm({ locale, mode, returnTo, googleEnabled }: Props) {
           <span>{copy.password}</span>
           <input name="password" type="password" required minLength={12} maxLength={128} autoComplete={isRegister ? "new-password" : "current-password"} className="w-full rounded-xl border border-stone-300 bg-white px-4 py-3 outline-none focus:border-emerald-700 focus:ring-2 focus:ring-emerald-700/15" />
         </label>
-        {error && <p role="status" className="rounded-lg bg-emerald-50 px-3 py-2 text-sm text-emerald-900">{error}</p>}
+        {error && (
+          <div role="status" className="rounded-lg bg-emerald-50 px-3 py-2 text-sm text-emerald-900">
+            <p>{error}</p>
+            {registerHint && (
+              <Link href="/register" className="mt-1 inline-block font-semibold underline underline-offset-2">
+                {copy.registerFirst}
+              </Link>
+            )}
+          </div>
+        )}
         <button type="submit" disabled={pending} className="w-full rounded-xl bg-emerald-800 px-4 py-3 font-semibold text-white transition hover:bg-emerald-900 disabled:opacity-60">
           {pending ? "…" : copy.submit}
         </button>
