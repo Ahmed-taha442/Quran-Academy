@@ -5,7 +5,7 @@
   "description": "Academy for teaching Quran and Noor Al-Bayan to non-Arabic speakers",
   "scripts": {
     "dev": "next dev --turbopack",
-    "build": "next build",
+    "build": "node scripts/build.mjs",
     "start": "next start",
     "lint": "eslint .",
     "db:generate": "node --env-file=.env.local ./node_modules/prisma/build/index.js generate",
