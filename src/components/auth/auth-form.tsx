@@ -26,7 +26,6 @@ export function AuthForm({ locale, mode, returnTo, googleEnabled }: Props) {
         submit: isRegister ? "إنشاء حساب طالب" : "تسجيل الدخول",
         google: "المتابعة باستخدام Google",
         separator: "أو باستخدام البريد الإلكتروني",
-        success: "تحقق من بريدك الإلكتروني لإكمال التسجيل.",
         genericError: "تعذر إكمال العملية. راجع البيانات وحاول مرة أخرى.",
         googleUnavailable: "تسجيل الدخول باستخدام Google غير مُعدّ بعد.",
       }
@@ -37,7 +36,6 @@ export function AuthForm({ locale, mode, returnTo, googleEnabled }: Props) {
         submit: isRegister ? "Create student account" : "Sign in",
         google: "Continue with Google",
         separator: "or continue with email",
-        success: "Check your email to complete registration.",
         genericError: "Could not complete the request. Check your details and try again.",
         googleUnavailable: "Google sign-in is not configured yet.",
       };
@@ -57,7 +55,11 @@ export function AuthForm({ locale, mode, returnTo, googleEnabled }: Props) {
         if (result.data?.token) {
           router.push(returnTo);
         } else {
-          setError(copy.success);
+          // If the provider did not establish a session during sign-up, authenticate
+          // the newly-created account through the normal database-backed sign-in flow.
+          const signInResult = await authClient.signIn.email({ email, password, callbackURL });
+          if (signInResult.error) throw new Error(signInResult.error.message);
+          router.push(returnTo);
         }
       } else {
         const result = await authClient.signIn.email({ email, password, callbackURL });

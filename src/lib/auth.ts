@@ -47,7 +47,7 @@ export const auth = betterAuth({
     minPasswordLength: 12,
     maxPasswordLength: 128,
     autoSignIn: true,
-    requireEmailVerification: process.env.NODE_ENV === "production",
+    requireEmailVerification: false,
     revokeSessionsOnPasswordReset: true,
     sendResetPassword: async ({ user, url }) => {
       after(async () => {
@@ -59,22 +59,6 @@ export const auth = betterAuth({
           );
         } catch (error) {
           console.error("Password reset email delivery failed.", error);
-        }
-      });
-    },
-  },
-  emailVerification: {
-    sendOnSignUp: process.env.NODE_ENV === "production",
-    sendVerificationEmail: async ({ user, url }) => {
-      after(async () => {
-        try {
-          await sendAuthEmail(
-            user.email,
-            "Verify your NOON Academy email",
-            `Use this secure link to verify your email: ${url}`,
-          );
-        } catch (error) {
-          console.error("Email verification delivery failed.", error);
         }
       });
     },
