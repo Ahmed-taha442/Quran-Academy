@@ -36,9 +36,23 @@ const googleCredentials =
       }
     : {};
 
+const vercelHosts = [process.env.VERCEL_PROJECT_PRODUCTION_URL, process.env.VERCEL_URL].filter(
+  (host): host is string => Boolean(host),
+);
+
+const authBaseURL = process.env.VERCEL
+  ? {
+      allowedHosts: vercelHosts,
+      fallback: process.env.VERCEL_PROJECT_PRODUCTION_URL
+        ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+        : process.env.BETTER_AUTH_URL,
+      protocol: "https" as const,
+    }
+  : process.env.BETTER_AUTH_URL;
+
 export const auth = betterAuth({
   appName: "NOON Quran Memorization Academy",
-  baseURL: process.env.BETTER_AUTH_URL,
+  baseURL: authBaseURL,
   secret: process.env.BETTER_AUTH_SECRET,
   database: prismaAdapter(prisma, { provider: "postgresql" }),
   trustedOrigins: process.env.BETTER_AUTH_TRUSTED_ORIGINS?.split(",").map((origin) => origin.trim()),
