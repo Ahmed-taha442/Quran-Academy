@@ -117,6 +117,23 @@ model StudentProfile {
   progress        LessonProgress[]
   hifzAssignments HifzAssignment[]
   sessions        LiveSessionStudent[]
+  quranActivities QuranStudyActivity[]
+}
+
+model QuranStudyActivity {
+  id              String         @id @default(cuid())
+  studentId       String
+  student         StudentProfile @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  activityType    String
+  surahNumber     Int
+  fromAyah        Int
+  toAyah          Int
+  durationSeconds Int            @default(0)
+  selfRating      String?
+  createdAt       DateTime       @default(now())
+
+  @@index([studentId, createdAt])
+  @@index([studentId, activityType, createdAt])
 }
 
 model Course {

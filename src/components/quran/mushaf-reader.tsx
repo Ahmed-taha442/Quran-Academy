@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { summarizeQuranProgress } from "@/lib/quran-progress-summary";
 import { MushafPageView } from "./mushaf-page-view";
 
 type Verse = {
@@ -62,6 +63,18 @@ type StoredStudy = {
   teacherNotes: TeacherNote[];
 };
 
+type ProgressActivity = {
+  id: string;
+  activityType: "READING" | "MEMORIZATION" | "REVIEW";
+  surahNumber: number;
+  fromAyah: number;
+  toAyah: number;
+  durationSeconds: number;
+  selfRating: string | null;
+  createdAt: string;
+};
+type TeacherStudentProgress = { id: string; user: { displayName: string }; quranActivities: ProgressActivity[] };
+
 const STORAGE_KEY = "accadmy.quran-study.v1";
 const EMPTY_STUDY: StoredStudy = {
   reviews: {},
@@ -78,7 +91,7 @@ const copy = {
     read: "Read",
     memorize: "Memorize & review",
     teacher: "Teacher tools",
-    local: "Study data is saved on this device",
+    local: "Reading and review activity syncs to your account",
     chooseSurah: "Choose surah",
     from: "From ayah",
     to: "To ayah",
@@ -138,7 +151,7 @@ const copy = {
     noAssignments: "No assignments yet.",
     ratingHint: "After reciting from memory, choose how well you recalled this range. Reviews are spaced over time.",
     translationHint: "A translation helps with meaning; learn pronunciation and recitation from a qualified teacher.",
-    dataNote: "This browser-only prototype does not sync data between student and teacher accounts yet.",
+    dataNote: "Student reading and review activity syncs to the teacher dashboard. Plans and notes on this device remain local.",
     savedOn: "Saved locally",
     assignedRange: "Range",
     ayah: "Ayah",
@@ -149,6 +162,15 @@ const copy = {
     noneDue: "No ayahs are due in this range today.",
     playAyah: "Play this ayah",
     reciter: "Reciter: Mahmoud Khalil Al-Husary",
+    markRead: "Mark range as read",
+    progress: "Your progress",
+    readingSessions: "Reading sessions",
+    memorizationReviews: "Memorization reviews",
+    studyMinutes: "Study minutes",
+    progressError: "Progress could not sync. Please try again.",
+    teacherProgress: "Assigned students' recent progress",
+    noStudentActivity: "No student activity recorded yet.",
+    openDashboard: "Open teacher dashboard",
   },
   ar: {
     title: "المصحف والحفظ والمراجعة",
@@ -156,7 +178,7 @@ const copy = {
     read: "القراءة",
     memorize: "الحفظ والمراجعة",
     teacher: "أدوات المعلم",
-    local: "بيانات الدراسة محفوظة على هذا الجهاز",
+    local: "تُحفظ القراءة والمراجعة في حسابك وتظهر لمعلمك",
     chooseSurah: "اختر السورة",
     from: "من الآية",
     to: "إلى الآية",
@@ -216,7 +238,7 @@ const copy = {
     noAssignments: "لا توجد واجبات بعد.",
     ratingHint: "بعد التسميع من الذاكرة، قيّم تذكرك لهذا النطاق. ستتوزع المراجعات على أيام مختلفة.",
     translationHint: "الترجمة لتقريب المعنى؛ تعلّم النطق والتلاوة من معلم مؤهل.",
-    dataNote: "هذه نسخة أولية تعمل في المتصفح، ولا تزامن البيانات بين حساب الطالب والمعلم بعد.",
+    dataNote: "يتزامن نشاط قراءة الطالب ومراجعته مع لوحة المعلم. أما الخطط والملاحظات على هذا الجهاز فتبقى محلية.",
     savedOn: "محفوظ محليًا",
     assignedRange: "النطاق",
     ayah: "آية",
@@ -227,6 +249,15 @@ const copy = {
     noneDue: "لا توجد آيات مستحقة للمراجعة اليوم في هذا النطاق.",
     playAyah: "استمع لهذه الآية",
     reciter: "\u0627\u0644\u0642\u0627\u0631\u0626: \u0627\u0644\u0634\u064a\u062e \u0645\u062d\u0645\u0648\u062f \u062e\u0644\u064a\u0644 \u0627\u0644\u062d\u0635\u0631\u064a",
+    markRead: "سجّل قراءة النطاق",
+    progress: "تقدّمك",
+    readingSessions: "جلسات القراءة",
+    memorizationReviews: "مراجعات الحفظ",
+    studyMinutes: "دقائق الدراسة",
+    progressError: "تعذّر مزامنة التقدم. حاول مرة أخرى.",
+    teacherProgress: "آخر تقدم للطلاب المرتبطين بك",
+    noStudentActivity: "لا يوجد نشاط مسجل للطلاب بعد.",
+    openDashboard: "فتح لوحة المعلم",
   },
 } as const;
 
@@ -264,7 +295,7 @@ function shortDate(date: string, locale: string) {
   );
 }
 
-export function MushafReader({ locale }: { locale: string }) {
+export function MushafReader({ locale, role }: { locale: string; role: string }) {
   const t: LocaleCopy = locale === "ar" ? copy.ar : copy.en;
   const translationLocale = ["ar", "ur", "fr", "id", "tr"].includes(locale)
     ? locale
@@ -293,6 +324,10 @@ export function MushafReader({ locale }: { locale: string }) {
   const [storageReady, setStorageReady] = useState(false);
   const [clock, setClock] = useState(0);
   const [reviewMessage, setReviewMessage] = useState("");
+  const [activities, setActivities] = useState<ProgressActivity[]>([]);
+  const [teacherStudents, setTeacherStudents] = useState<TeacherStudentProgress[]>([]);
+  const [progressError, setProgressError] = useState(false);
+  const playbackStartedAt = useRef<number | null>(null);
   const [assignmentTitle, setAssignmentTitle] = useState("");
   const [teacherComment, setTeacherComment] = useState("");
   const [rubric, setRubric] = useState({ accuracy: 3, fluency: 3, tajweed: 3, confidence: 3 });
@@ -306,6 +341,47 @@ export function MushafReader({ locale }: { locale: string }) {
     });
     return () => window.cancelAnimationFrame(frame);
   }, []);
+
+  useEffect(() => {
+    if (role !== "TEACHER") return;
+    const controller = new AbortController();
+    fetch("/api/quran/progress", { signal: controller.signal, cache: "no-store" })
+      .then(async (response) => {
+        if (!response.ok) throw new Error("Could not load student progress");
+        return (await response.json()) as { students?: TeacherStudentProgress[] };
+      })
+      .then((result) => setTeacherStudents(result.students ?? []))
+      .catch(() => { if (!controller.signal.aborted) setProgressError(true); });
+    return () => controller.abort();
+  }, [role]);
+
+  useEffect(() => {
+    const controller = new AbortController();
+    fetch("/api/quran/progress", { signal: controller.signal, cache: "no-store" })
+      .then(async (response) => {
+        if (!response.ok) throw new Error("Could not load Quran progress");
+        return (await response.json()) as { activities?: ProgressActivity[] };
+      })
+      .then((result) => setActivities(result.activities ?? []))
+      .catch(() => { if (!controller.signal.aborted) setProgressError(true); });
+    return () => controller.abort();
+  }, []);
+
+  async function recordActivity(activityType: ProgressActivity["activityType"], selfRating?: string, durationSeconds = 0) {
+    setProgressError(false);
+    try {
+      const response = await fetch("/api/quran/progress", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ activityType, surahNumber, fromAyah, toAyah, durationSeconds, selfRating }),
+      });
+      if (!response.ok) throw new Error("Could not save Quran progress");
+      const result = (await response.json()) as { activity: ProgressActivity };
+      setActivities((current) => [result.activity, ...current].slice(0, 100));
+    } catch {
+      setProgressError(true);
+    }
+  }
 
   useEffect(() => {
     const initialize = window.setTimeout(() => setClock(Date.now()), 0);
@@ -406,6 +482,7 @@ export function MushafReader({ locale }: { locale: string }) {
   function startPlayback(index = 0) {
     if (!selectedAyahs[index]?.audio) return;
     repeatsPlayed.current = 0;
+    playbackStartedAt.current = Date.now();
     setCurrentIndex(index);
     setPlaying(true);
   }
@@ -445,7 +522,14 @@ export function MushafReader({ locale }: { locale: string }) {
     }
     repeatsPlayed.current = 0;
     if (currentIndex < selectedAyahs.length - 1) setCurrentIndex((index) => index + 1);
-    else setPlaying(false);
+    else {
+      setPlaying(false);
+      if (playbackStartedAt.current) {
+        const seconds = Math.max(1, Math.round((Date.now() - playbackStartedAt.current) / 1000));
+        void recordActivity("READING", undefined, seconds);
+        playbackStartedAt.current = null;
+      }
+    }
   }
 
   function toggleBookmark(ayahNumber: number) {
@@ -552,6 +636,7 @@ export function MushafReader({ locale }: { locale: string }) {
     });
     setReviewMessage(t.reviewSaved);
     setReviewDueOnly(false);
+    void recordActivity("REVIEW", rating);
   }
 
   function addAssignment() {
@@ -601,6 +686,8 @@ export function MushafReader({ locale }: { locale: string }) {
   }
 
   const uiSurahName = data ? `${data.surah.englishName} · ${data.surah.name}` : "";
+  const canUseTeacherTools = role === "TEACHER";
+  const progressSummary = summarizeQuranProgress(activities);
 
   return (
     <div className="mx-auto max-w-[100rem] px-3 py-5 sm:px-6 sm:py-8 lg:px-8" dir={locale === "ar" || locale === "ur" ? "rtl" : "ltr"}>
@@ -613,7 +700,7 @@ export function MushafReader({ locale }: { locale: string }) {
           </div>
           <div className="grid min-w-56 grid-cols-3 gap-2 rounded-2xl border border-white/15 bg-white/10 p-3 text-center backdrop-blur-sm">
             <div><strong className="block text-2xl">{dueKeys.length}</strong><span className="text-xs text-emerald-100">{t.due}</span></div>
-            <div><strong className="block text-2xl">{trackedCount}</strong><span className="text-xs text-emerald-100">{t.saved}</span></div>
+            <div><strong className="block text-2xl">{activities.length}</strong><span className="text-xs text-emerald-100">{t.progress}</span></div>
             <div><strong className="block text-2xl">{bookmarkCount}</strong><span className="text-xs text-emerald-100">{t.bookmarks}</span></div>
           </div>
         </div>
@@ -626,7 +713,7 @@ export function MushafReader({ locale }: { locale: string }) {
         {([
           ["read", t.read],
           ["memorize", t.memorize],
-          ["teacher", t.teacher],
+          ...(canUseTeacherTools ? [["teacher", t.teacher] as const] : []),
         ] as const).map(([tab, label]) => (
           <button
             key={tab}
@@ -747,6 +834,17 @@ export function MushafReader({ locale }: { locale: string }) {
         </main>
 
         <aside className="grid gap-4 lg:sticky lg:top-24">
+          {!canUseTeacherTools && <section className="rounded-2xl border border-[var(--border)] bg-white p-4 shadow-sm sm:p-5">
+            <h2 className="font-semibold text-[var(--ink)]">{t.progress}</h2>
+            <div className="mt-3 grid grid-cols-3 gap-2 text-center">
+              <div className="rounded-xl bg-[var(--surface-soft)] p-2"><strong className="block text-xl text-[var(--accent)]">{progressSummary.readingSessions}</strong><span className="text-[10px] text-[var(--muted)]">{t.readingSessions}</span></div>
+              <div className="rounded-xl bg-[var(--surface-soft)] p-2"><strong className="block text-xl text-[var(--accent)]">{progressSummary.reviewSessions}</strong><span className="text-[10px] text-[var(--muted)]">{t.memorizationReviews}</span></div>
+              <div className="rounded-xl bg-[var(--surface-soft)] p-2"><strong className="block text-xl text-[var(--accent)]">{progressSummary.uniqueAyahs}</strong><span className="text-[10px] text-[var(--muted)]">{locale === "ar" ? "آيات تمت متابعتها" : "Ayahs covered"}</span></div>
+            </div>
+            <p className="mt-2 text-center text-[10px] text-[var(--muted)]">{locale === "ar" ? "التقييم الذاتي للمراجعة" : "Self-rated review"}: {progressSummary.selfRatingPercent === null ? "—" : `${progressSummary.selfRatingPercent}%`} · {t.studyMinutes}: {progressSummary.listeningMinutes}</p>
+            <button type="button" onClick={() => void recordActivity("READING")} disabled={!selectedAyahs.length} className="mt-3 min-h-11 w-full rounded-xl border border-[var(--border)] px-3 text-xs font-semibold text-[var(--accent)] hover:bg-[var(--surface-soft)] disabled:opacity-50">{t.markRead}</button>
+            {progressError && <p role="alert" className="mt-2 text-xs text-rose-700">{t.progressError}</p>}
+          </section>}
           {(activeTab === "read" || activeTab === "memorize") && (
             <section className="rounded-2xl border border-[var(--border)] bg-white p-4 shadow-sm sm:p-5">
               <h2 className="font-semibold text-[var(--ink)]">{t.mushafPage}</h2>
@@ -821,6 +919,13 @@ export function MushafReader({ locale }: { locale: string }) {
               <section className="rounded-2xl border border-[var(--border)] bg-white p-4 shadow-sm sm:p-5">
                 <h2 className="font-semibold text-[var(--ink)]">{t.teacher}</h2>
                 <p className="mt-1 text-xs leading-5 text-[var(--muted)]">{t.dataNote}</p>
+                <h3 className="mt-4 font-semibold text-[var(--ink)]">{locale === "ar" ? "نشاط الطلاب المرتبطين بك" : "Progress from your assigned students"}</h3>
+                {teacherStudents.flatMap((student) => student.quranActivities.map((activity) => ({ student, activity }))).length === 0 ? <p className="mt-2 text-xs text-[var(--muted)]">{locale === "ar" ? "لا يوجد نشاط مسجل بعد." : "No student activity recorded yet."}</p> :
+                  <ul className="mt-2 grid gap-2">{teacherStudents.flatMap((student) => student.quranActivities.map((activity) => ({ student, activity }))).slice(0, 8).map(({ student, activity }) => (
+                    <li key={`${student.id}-${activity.id}`} className="rounded-lg bg-[var(--surface-soft)] p-2 text-xs"><strong>{student.user.displayName}</strong><span className="block text-[var(--muted)]">{activity.activityType === "READING" ? t.read : t.memorize} · {activity.surahNumber}:{activity.fromAyah}–{activity.toAyah}{activity.selfRating ? ` · ${activity.selfRating}` : ""}</span></li>
+                  ))}</ul>}
+                {progressError && <p role="alert" className="mt-2 text-xs text-rose-700">{t.progressError}</p>}
+                <a href={`/${locale}/teacher/dashboard`} className="mt-3 inline-flex min-h-10 items-center text-sm font-semibold text-[var(--accent)] underline">{locale === "ar" ? "فتح لوحة المعلم" : "Open teacher dashboard"}</a>
                 <label className="mt-4 grid gap-1.5 text-xs font-semibold text-[var(--ink)]">{t.assignmentTitle}
                   <input value={assignmentTitle} onChange={(event) => setAssignmentTitle(event.target.value)} placeholder={t.assignmentPlaceholder} className="h-11 rounded-xl border border-[var(--border)] bg-[var(--bg)] px-3 text-sm font-normal" />
                 </label>

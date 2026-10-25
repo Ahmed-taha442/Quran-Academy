@@ -8,8 +8,9 @@ type Props = {
 
 export default async function MushafPage({ params }: Props) {
   const { locale } = await params;
-  await requireAuthenticated(locale, `/${locale}/learn/quran/mushaf`);
+  const session = await requireAuthenticated(locale, `/${locale}/learn/quran/mushaf`);
   setRequestLocale(locale);
 
-  return <MushafReader locale={locale} />;
+  const role = (session.user as typeof session.user & { role?: string }).role ?? "STUDENT";
+  return <MushafReader locale={locale} role={role} />;
 }
