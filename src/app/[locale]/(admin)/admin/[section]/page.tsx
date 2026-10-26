@@ -1,7 +1,11 @@
 import { notFound } from "next/navigation";
+import { AdminStudentsSection } from "@/components/admin/admin-students-section";
 import { AdminSectionPage } from "@/components/admin/admin-section-page";
 
-type Props = { params: Promise<{ locale: string; section: string }> };
+type Props = {
+  params: Promise<{ locale: string; section: string }>;
+  searchParams: Promise<{ q?: string | string[]; page?: string | string[] }>;
+};
 
 const sections = {
   users: {
@@ -41,9 +45,10 @@ const sections = {
   },
 } as const;
 
-export default async function AdminSectionRoute({ params }: Props) {
+export default async function AdminSectionRoute({ params, searchParams }: Props) {
   const { locale, section } = await params;
   const content = sections[section as keyof typeof sections];
   if (!content) notFound();
+  if (section === "students") return <AdminStudentsSection locale={locale} searchParams={searchParams} />;
   return <AdminSectionPage locale={locale} title={locale === "ar" ? content.title[0] : content.title[1]} description={locale === "ar" ? content.description[0] : content.description[1]} metrics={content.metrics.map(([ar, en]) => ({ ar, en }))} actions={content.actions.map(([ar, en]) => ({ ar, en }))} columns={content.columns.map(([ar, en]) => ({ ar, en }))} />;
 }
